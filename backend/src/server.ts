@@ -25,21 +25,34 @@ const PORT = Number(process.env.PORT) || 5000;
 // Security & Parsers
 app.disable('x-powered-by');
 
+const configuredOrigins = (process.env.FRONTEND_URL || '')
+  .split(',')
+  .map(url => url.trim().replace(/\/$/, ''))
+  .filter(Boolean);
+
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
-  process.env.FRONTEND_URL
-].filter(Boolean) as string[];
+  'http://localhost:3000',
+  ...configuredOrigins
+];
 
 app.use(cors({
   origin: (requestOrigin, callback) => {
-    // Allow non-browser requests or allowed frontend origins
-    if (!requestOrigin || allowedOrigins.includes(requestOrigin)) {
+    if (!requestOrigin) {
+      return callback(null, true);
+    }
+    const sanitizedOrigin = requestOrigin.replace(/\/$/, '');
+    if (
+      allowedOrigins.includes(sanitizedOrigin) ||
+      sanitizedOrigin.endsWith('.vercel.app')
+    ) {
       callback(null, true);
     } else {
-      callback(new Error('Blocked by CORS policy'));
+      callback(new Error(`Blocked by CORS policy: ${requestOrigin}`));
     }
   },
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-admin-id']
 }));

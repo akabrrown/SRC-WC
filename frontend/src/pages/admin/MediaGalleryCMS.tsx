@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Image as ImageIcon, Plus, Trash2, Save, CheckCircle2, AlertCircle, ShieldAlert } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Image as ImageIcon, Plus, Trash2, Save, Upload, Cloud, X } from 'lucide-react';
 import { api } from '../../api/client.js';
 import { MediaItem } from '../../types/index.js';
 import { LoadingState } from '../../components/StateView.js';
-
 import { useToast } from '../../context/ToastContext.js';
 import { ConfirmModal } from '../../components/ConfirmModal.js';
+import { uploadToCloudinary } from '../../utils/cloudinary.js';
 
 export const MediaGalleryCMS: React.FC = () => {
   const toast = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [uploading, setUploading] = useState<boolean>(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>('');
   const [newItem, setNewItem] = useState<{ url: string; caption: string; alt_text: string }>({
     url: '',
     caption: '',
@@ -37,31 +41,65 @@ export const MediaGalleryCMS: React.FC = () => {
     }
   };
 
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast.error('Invalid File', 'Please select an image file (JPG, PNG, WebP).');
+      return;
+    }
+
+    setSelectedFile(file);
+    const objectUrl = URL.createObjectURL(file);
+    setPreviewUrl(objectUrl);
+  };
+
   const handleAddMedia = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newItem.url || !newItem.alt_text.trim()) {
+
+    if (!newItem.alt_text.trim()) {
       toast.error('Accessibility Requirement', 'Alt text is strictly mandatory for screen readers.');
       return;
     }
 
+    if (!selectedFile && !newItem.url.trim()) {
+      toast.error('Missing Media', 'Please select an image to upload or enter a direct CDN URL.');
+      return;
+    }
+
     setUploading(true);
+    setUploadProgress(0);
 
     try {
+      let finalUrl = newItem.url.trim();
+
+      // If a local file was selected, upload it directly to Cloudinary
+      if (selectedFile) {
+        finalUrl = await uploadToCloudinary(selectedFile, (progress) => {
+          setUploadProgress(progress);
+        });
+      }
+
       const created = await api.createMedia({
         media_type: 'photo',
-        url: newItem.url.trim(),
+        url: finalUrl,
         caption: newItem.caption.trim() || undefined,
         alt_text: newItem.alt_text.trim(),
         sort_order: media.length + 1
       });
+
       setMedia([...media, created]);
       setIsAdding(false);
+      setSelectedFile(null);
+      setPreviewUrl('');
       setNewItem({ url: '', caption: '', alt_text: '' });
-      toast.success('Media Uploaded', 'New photo added to campaign gallery.');
+      toast.success('Media Uploaded', 'New photo uploaded and published to gallery.');
     } catch (err: any) {
-      toast.error('Upload Failed', err.message || 'Upload failed.');
+      toast.error('Upload Failed', err.message || 'Failed to process media upload.');
     } finally {
       setUploading(false);
+      setUploadProgress(0);
     }
   };
 
@@ -80,7 +118,6 @@ export const MediaGalleryCMS: React.FC = () => {
     }
   };
 
-
   if (loading) {
     return <LoadingState message="Loading media gallery..." />;
   }
@@ -97,7 +134,7 @@ export const MediaGalleryCMS: React.FC = () => {
             Media Gallery & Visuals
           </h1>
           <p className="text-xs text-ink/65">
-            Manage campaign photos with mandatory WCAG accessibility alt-text enforcement.
+            Upload campaign photos to Cloudinary CDN with mandatory WCAG accessibility alt-text enforcement.
           </p>
         </div>
 
@@ -113,28 +150,92 @@ export const MediaGalleryCMS: React.FC = () => {
       </div>
 
       {isAdding && (
-        <form onSubmit={handleAddMedia} className="campaign-card space-y-4">
-
-          <h2 className="text-base font-bold text-brand-navy border-b border-border pb-3">
-            Add New Media Asset
-          </h2>
+        <form onSubmit={handleAddMedia} className="campaign-card space-y-5">
+          <div className="flex items-center justify-between border-b border-border pb-3">
+            <h2 className="text-base font-bold text-brand-navy flex items-center gap-2">
+              <Cloud className="w-4 h-4 text-brand-gold" />
+              <span>Upload New Photo Asset (Cloudinary CDN)</span>
+            </h2>
+            <button
+              type="button"
+              onClick={() => {
+                setIsAdding(false);
+                setSelectedFile(null);
+                setPreviewUrl('');
+              }}
+              className="text-ink/40 hover:text-ink transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
+            {/* File Upload / Drag & Drop area */}
+            <div className="sm:col-span-2">
               <label className="block text-xs font-bold text-ink mb-1">
-                Image CDN URL (Cloudinary / S3) *
+                Upload Image File (Direct to Cloudinary)
+              </label>
+              <div
+                onClick={() => fileInputRef.current?.click()}
+                className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-colors ${
+                  previewUrl ? 'border-brand-gold bg-brand-gold/5' : 'border-border hover:border-brand-gold bg-surface/50'
+                }`}
+              >
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                  className="hidden"
+                />
+                {previewUrl ? (
+                  <div className="flex flex-col items-center gap-3">
+                    <img
+                      src={previewUrl}
+                      alt="Upload preview"
+                      className="h-36 max-w-full object-cover rounded-lg border border-border shadow-sm"
+                    />
+                    <p className="text-xs text-brand-navy font-semibold">
+                      {selectedFile?.name} ({(Number(selectedFile?.size || 0) / 1024).toFixed(1)} KB) — Click to change
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-2 text-center">
+                    <div className="w-10 h-10 rounded-full bg-brand-gold/15 flex items-center justify-center text-brand-gold">
+                      <Upload className="w-5 h-5" />
+                    </div>
+                    <span className="text-xs font-bold text-brand-navy">
+                      Click to choose an image file from your device
+                    </span>
+                    <span className="text-[11px] text-ink/50">
+                      Supports JPG, PNG, WebP up to 10MB
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Optional Direct URL override */}
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-bold text-ink mb-1">
+                Or Paste Existing Image URL
               </label>
               <input
                 type="url"
-                required
                 value={newItem.url}
-                onChange={(e) => setNewItem({ ...newItem, url: e.target.value })}
-                placeholder="https://res.cloudinary.com/.../photo.jpg"
+                onChange={(e) => {
+                  setNewItem({ ...newItem, url: e.target.value });
+                  if (e.target.value) {
+                    setPreviewUrl(e.target.value);
+                    setSelectedFile(null);
+                  }
+                }}
+                placeholder="https://res.cloudinary.com/rymbfj8c/image/upload/..."
                 className="w-full px-3 py-2 rounded border border-border text-xs focus:border-brand-gold bg-white"
               />
             </div>
 
-            <div>
+            <div className="sm:col-span-2">
               <label className="block text-xs font-bold text-ink mb-1">
                 Caption (Optional)
               </label>
@@ -157,27 +258,46 @@ export const MediaGalleryCMS: React.FC = () => {
                 required
                 value={newItem.alt_text}
                 onChange={(e) => setNewItem({ ...newItem, alt_text: e.target.value })}
-                placeholder="Describe the image content for screen readers (e.g. Candidate addressing a full hall of female students)"
+                placeholder="Describe what is happening in the photo for screen readers..."
                 className="w-full px-3 py-2 rounded border border-border text-xs focus:border-brand-gold bg-white font-medium"
               />
             </div>
           </div>
 
-          <div className="flex justify-end gap-2 pt-2 border-t border-border">
+          {uploading && uploadProgress > 0 && (
+            <div className="space-y-1.5 pt-2">
+              <div className="flex justify-between text-xs text-brand-navy font-semibold">
+                <span>Uploading to Cloudinary CDN...</span>
+                <span>{uploadProgress}%</span>
+              </div>
+              <div className="w-full bg-border rounded-full h-2 overflow-hidden">
+                <div
+                  className="bg-brand-gold h-full transition-all duration-150"
+                  style={{ width: `${uploadProgress}%` }}
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="flex justify-end gap-2 pt-3 border-t border-border">
             <button
               type="button"
-              onClick={() => setIsAdding(false)}
-              className="px-4 py-2 text-xs text-ink/60"
+              onClick={() => {
+                setIsAdding(false);
+                setSelectedFile(null);
+                setPreviewUrl('');
+              }}
+              className="px-4 py-2 text-xs text-ink/60 hover:text-ink"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={uploading}
-              className="btn-gold text-xs font-bold py-2 px-6 gap-2"
+              className="btn-gold text-xs font-bold py-2 px-6 gap-2 shadow-sm"
             >
               <Save className="w-3.5 h-3.5" />
-              <span>{uploading ? 'Adding...' : 'Save to Gallery'}</span>
+              <span>{uploading ? 'Uploading...' : 'Save to Gallery'}</span>
             </button>
           </div>
         </form>
@@ -192,6 +312,7 @@ export const MediaGalleryCMS: React.FC = () => {
                 src={item.url}
                 alt={item.alt_text}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                loading="lazy"
               />
               <button
                 onClick={() => setDeleteTargetId(item.id)}
@@ -227,4 +348,3 @@ export const MediaGalleryCMS: React.FC = () => {
     </div>
   );
 };
-

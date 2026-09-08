@@ -1,0 +1,212 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@theme {
+  --color-brand-navy: #00004E;
+  --color-brand-navyDark: #00002E;
+  --color-brand-navyLight: #0A0A66;
+  --color-brand-gold: #C69500;
+  --color-brand-goldHover: #A87E00;
+  --color-brand-goldLight: #F5E9C9;
+  --color-ink: #1A1A1A;
+  --color-surface: #FFFFFF;
+  --color-muted: #F4F1EA;
+  --color-border: #E5E5E0;
+  --radius-card: 12px;
+  --radius-btn: 8px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum";
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+  }
+
+  /* Focus outline accessible styles */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-brand-gold);
+  }
+}
+
+/* Brand Buttons - 8-16px radius, never full pills except badges */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  background-color: #C69500;
+  color: #00002E;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  min-height: 44px;
+}
+.btn-gold:hover:not(:disabled) {
+  background-color: #A87E00;
+}
+.btn-gold:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-navy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  background-color: #00004E;
+  color: #FFFFFF;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  min-height: 44px;
+}
+.btn-navy:hover:not(:disabled) {
+  background-color: #00002E;
+}
+.btn-navy:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-outline-navy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  border: 2px solid #00004E;
+  color: #00004E;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  min-height: 44px;
+}
+.btn-outline-navy:hover:not(:disabled) {
+  background-color: #00004E;
+  color: #FFFFFF;
+}
+.btn-outline-navy:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-outline-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  border: 2px solid #FFFFFF;
+  color: #FFFFFF;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  min-height: 44px;
+}
+.btn-outline-white:hover:not(:disabled) {
+  background-color: #FFFFFF;
+  color: #00002E;
+}
+.btn-outline-white:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Editorial Card Styling */
+.campaign-card {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #E5E5E0;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 78, 0.06);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.campaign-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 78, 0.1);
+}
+
+/* Placeholder Flag Badge */
+.placeholder-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.625rem;
+  border-radius: 4px;
+  background-color: #FEF3C7;
+  color: #78350F;
+  border: 1px solid #FCD34D;
+}
+
+/* Status Badges */
+.badge-published {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #D1FAE5;
+  color: #065F46;
+}
+.badge-approved {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #DBEAFE;
+  color: #1E40AF;
+}
+.badge-review {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+.badge-draft {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #F3F4F6;
+  color: #1F2937;
+}
+.badge-archived {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #F1F5F9;
+  color: #475569;
+}
+
+/* Accessibility: Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,2412 @@
+{
+  "candidateProfile": {
+    "id": "primary",
+    "full_name": "[Candidate Full Name]",
+    "display_name": "[Candidate Name]",
+    "position_title": "SRC Women's Commissioner",
+    "institution_name": "University of Professional Studies, Accra (UPSA)",
+    "programme": "BSc. Accounting with Finance",
+    "level": "300",
+    "slogan": "[Campaign Slogan Goes Here]",
+    "short_bio": "A committed advocate for student welfare, gender inclusion, and practical campus resource distribution. Dedicated to bringing responsive leadership and measurable accountability to the Office of the SRC Women's Commissioner.",
+    "hero_photo_url": "",
+    "about_photo_urls": [],
+    "favicon_url": "",
+    "seo_description": "Official campaign website for the SRC Women's Commissioner candidate at UPSA. Discover our vision, campus initiatives, and student voice platform.",
+    "is_placeholder": true,
+    "updated_at": "2026-09-08T09:50:52.700Z"
+  },
+  "siteSettings": {
+    "id": "primary",
+    "agenda_teaser_mode": true,
+    "accountability_tracker_visible": false,
+    "teaser_video_url": "",
+    "election_date": "2026-10-15",
+    "ga_id": "",
+    "meta_pixel_id": "",
+    "domain": "upsa-src-wc.org",
+    "updated_at": "2026-09-08T09:50:53.989Z"
+  },
+  "visionContent": {
+    "id": "primary",
+    "vision_statement": "[Approved Vision Statement — Draft Pending Approval]",
+    "mission_statement": "To foster an equitable, supportive, and career-enabling campus environment for all women students at UPSA through transparent representation, targeted welfare interventions, and direct policy advocacy.",
+    "is_placeholder": true,
+    "updated_at": "2026-09-08T07:42:30.061Z"
+  },
+  "brandAssets": {
+    "id": "primary",
+    "logo_url": "",
+    "color_overrides": {
+      "navy": "#00004E",
+      "navyDark": "#00002E",
+      "gold": "#C69500",
+      "surface": "#FFFFFF",
+      "muted": "#F4F1EA",
+      "border": "#E5E5E0",
+      "ink": "#1A1A1A"
+    },
+    "typography_notes": "Inter (Headings: Bold/SemiBold; Body: Regular/Medium). Tabular figures for statistics.",
+    "updated_at": "2026-09-08T07:42:30.061Z"
+  },
+  "contactChannels": {
+    "id": "primary",
+    "whatsapp_number": "+233240000000",
+    "phone_number": "+233240000000",
+    "email": "contact@upsa-src-wc.org",
+    "office_location": "UPSA Student Centre, Room 204",
+    "contact_form_recipient_email": "campaign@upsa-src-wc.org",
+    "volunteer_recipient_email": "mobilisation@upsa-src-wc.org",
+    "updated_at": "2026-09-08T07:42:30.061Z"
+  },
+  "values": [
+    {
+      "id": "val-1",
+      "title": "Service",
+      "description": "Committed to prioritising student needs over ceremonial office privileges.",
+      "sort_order": 1
+    },
+    {
+      "id": "val-2",
+      "title": "Integrity",
+      "description": "Transparent reporting of committee allocations, sponsorships, and decisions.",
+      "sort_order": 2
+    },
+    {
+      "id": "val-3",
+      "title": "Inclusion",
+      "description": "Ensuring commuter students, hostel residents, and evening streams have equal access.",
+      "sort_order": 3
+    },
+    {
+      "id": "val-4",
+      "title": "Courage",
+      "description": "Stepping forward on difficult student issues without institutional compromise.",
+      "sort_order": 4
+    },
+    {
+      "id": "val-5",
+      "title": "Accountability",
+      "description": "Regular town halls and verifiable quarterly milestone reporting.",
+      "sort_order": 5
+    },
+    {
+      "id": "val-6",
+      "title": "Empathy",
+      "description": "Listening first to lived campus challenges before drafting intervention policies.",
+      "sort_order": 6
+    },
+    {
+      "id": "val-7",
+      "title": "Excellence",
+      "description": "Professional execution of programmes and professional development opportunities.",
+      "sort_order": 7
+    }
+  ],
+  "promises": [
+    {
+      "id": "prom-1",
+      "promise_number": 1,
+      "title": "I Will Listen",
+      "description": "Host bi-weekly open-door listening desks across campus hostels and lecture blocks to hear student concerns directly.",
+      "sort_order": 1
+    },
+    {
+      "id": "prom-2",
+      "promise_number": 2,
+      "title": "I Will Advocate",
+      "description": "Take student welfare demands straight to faculty administration with documented evidence and clear solutions.",
+      "sort_order": 2
+    },
+    {
+      "id": "prom-3",
+      "promise_number": 3,
+      "title": "I Will Account",
+      "description": "Publish verified reports on every cedi disbursed, event hosted, and student concern handled.",
+      "sort_order": 3
+    }
+  ],
+  "socialLinks": [
+    {
+      "id": "soc-1",
+      "platform": "instagram",
+      "url": "https://instagram.com/upsawomenscomm",
+      "visible": true,
+      "sort_order": 1
+    },
+    {
+      "id": "soc-2",
+      "platform": "tiktok",
+      "url": "https://tiktok.com/@upsawomenscomm",
+      "visible": true,
+      "sort_order": 2
+    },
+    {
+      "id": "soc-3",
+      "platform": "x",
+      "url": "https://x.com/upsawomenscomm",
+      "visible": true,
+      "sort_order": 3
+    },
+    {
+      "id": "soc-4",
+      "platform": "linkedin",
+      "url": "https://linkedin.com/company/upsa-src",
+      "visible": true,
+      "sort_order": 4
+    },
+    {
+      "id": "soc-5",
+      "platform": "whatsapp",
+      "url": "https://wa.me/233240000000",
+      "visible": true,
+      "sort_order": 5
+    }
+  ],
+  "surveyLinks": [
+    {
+      "id": "surv-1",
+      "form_name": "Women's Campus Needs Survey 2026",
+      "platform": "Google Forms",
+      "url": "https://forms.gle/sample-needs-survey",
+      "status": "live",
+      "description": "Confidential campus-wide survey capturing sanitation, security, and career preparation priorities.",
+      "sort_order": 1
+    },
+    {
+      "id": "surv-2",
+      "form_name": "Hostel Safety & Commuter Quick Poll",
+      "platform": "Typeform",
+      "url": "https://poll.typeform.com/to/sample",
+      "status": "live",
+      "description": "A 2-minute pulse check on evening transit safety and campus lighting around major hostels.",
+      "sort_order": 2
+    },
+    {
+      "id": "surv-3",
+      "form_name": "Mentorship & Industry Apprenticeship Form",
+      "platform": "Google Forms",
+      "url": "",
+      "status": "coming_soon",
+      "description": "Connecting female students with industry alumnae in finance, law, tech, and marketing.",
+      "sort_order": 3
+    }
+  ],
+  "womensCornerSections": [
+    {
+      "id": "wc-1",
+      "title": "Women's Issues",
+      "icon": "shield-alert",
+      "body": "Tackling systemic campus hurdles: safe shuttle hours, well-maintained sanitation facilities in academic blocks, and clear reporting mechanisms for harassment with guaranteed confidentiality.",
+      "sort_order": 1,
+      "status": "published"
+    },
+    {
+      "id": "wc-2",
+      "title": "Opportunities",
+      "icon": "briefcase",
+      "body": "Direct partnerships with corporate sponsors for paid internships, CV clinics with top recruiters, and structured skills bootcamps in financial modelling and data analytics.",
+      "sort_order": 2,
+      "status": "published"
+    },
+    {
+      "id": "wc-3",
+      "title": "Resources",
+      "icon": "book-open",
+      "body": "Free academic past-question repositories, emergency hygiene kits in hostel warden offices, and peer-to-peer tutoring circles for demanding quantitative courses.",
+      "sort_order": 3,
+      "status": "published"
+    },
+    {
+      "id": "wc-4",
+      "title": "Support",
+      "icon": "heart-handshake",
+      "body": "Mental wellness drop-in sessions with qualified campus counsellors, anonymous welfare support requests, and legal clinic partnerships for student rights protection.",
+      "sort_order": 4,
+      "status": "published"
+    }
+  ],
+  "updates": [
+    {
+      "title": "Playwright Automated Dispatch",
+      "slug": "playwright-automated-dispatch",
+      "category": "news",
+      "excerpt": "Comprehensive verification completed across all public and admin modules....",
+      "body": "Comprehensive verification completed across all public and admin modules.",
+      "cover_image_url": "",
+      "status": "draft",
+      "id": "upd-1788861056785",
+      "created_at": "2026-09-08T09:50:56.785Z",
+      "updated_at": "2026-09-08T09:50:56.785Z"
+    },
+    {
+      "title": "Playwright Automated Dispatch",
+      "slug": "playwright-automated-dispatch",
+      "category": "news",
+      "excerpt": "Comprehensive verification completed across all public and admin modules....",
+      "body": "Comprehensive verification completed across all public and admin modules.",
+      "cover_image_url": "",
+      "status": "draft",
+      "id": "upd-1788860765009",
+      "created_at": "2026-09-08T09:46:05.009Z",
+      "updated_at": "2026-09-08T09:46:05.009Z"
+    },
+    {
+      "title": "Playwright Automated Dispatch",
+      "slug": "playwright-automated-dispatch",
+      "category": "news",
+      "excerpt": "Comprehensive verification completed across all public and admin modules....",
+      "body": "Comprehensive verification completed across all public and admin modules.",
+      "cover_image_url": "",
+      "status": "draft",
+      "id": "upd-1788858893431",
+      "created_at": "2026-09-08T09:14:53.431Z",
+      "updated_at": "2026-09-08T09:14:53.431Z"
+    },
+    {
+      "title": "Playwright Automated Dispatch",
+      "slug": "playwright-automated-dispatch",
+      "category": "news",
+      "excerpt": "Comprehensive verification completed across all public and admin modules....",
+      "body": "Comprehensive verification completed across all public and admin modules.",
+      "cover_image_url": "",
+      "status": "draft",
+      "id": "upd-1788858725906",
+      "created_at": "2026-09-08T09:12:05.906Z",
+      "updated_at": "2026-09-08T09:12:05.906Z"
+    },
+    {
+      "title": "Playwright Automated Dispatch",
+      "slug": "playwright-automated-dispatch",
+      "category": "news",
+      "excerpt": "Comprehensive verification completed across all public and admin modules....",
+      "body": "Comprehensive verification completed across all public and admin modules.",
+      "cover_image_url": "",
+      "status": "draft",
+      "id": "upd-1788858667761",
+      "created_at": "2026-09-08T09:11:07.761Z",
+      "updated_at": "2026-09-08T09:11:07.761Z"
+    },
+    {
+      "title": "Playwright Automated Dispatch",
+      "slug": "playwright-automated-dispatch",
+      "category": "news",
+      "excerpt": "Comprehensive verification completed across all public and admin modules....",
+      "body": "Comprehensive verification completed across all public and admin modules.",
+      "cover_image_url": "",
+      "status": "draft",
+      "id": "upd-1788858598195",
+      "created_at": "2026-09-08T09:09:58.195Z",
+      "updated_at": "2026-09-08T09:09:58.195Z"
+    },
+    {
+      "title": "Playwright Automated Dispatch",
+      "slug": "playwright-automated-dispatch",
+      "category": "news",
+      "excerpt": "Comprehensive verification completed across all public and admin modules....",
+      "body": "Comprehensive verification completed across all public and admin modules.",
+      "cover_image_url": "",
+      "status": "draft",
+      "id": "upd-1788857845234",
+      "created_at": "2026-09-08T08:57:25.234Z",
+      "updated_at": "2026-09-08T08:57:25.234Z"
+    },
+    {
+      "title": "Playwright Automated Dispatch",
+      "slug": "playwright-automated-dispatch",
+      "category": "news",
+      "excerpt": "Comprehensive verification completed across all public and admin modules....",
+      "body": "Comprehensive verification completed across all public and admin modules.",
+      "cover_image_url": "",
+      "status": "draft",
+      "id": "upd-1788857756266",
+      "created_at": "2026-09-08T08:55:56.266Z",
+      "updated_at": "2026-09-08T08:55:56.266Z"
+    },
+    {
+      "title": "Playwright Automated Dispatch",
+      "slug": "playwright-automated-dispatch",
+      "category": "news",
+      "excerpt": "Comprehensive verification completed across all public and admin modules....",
+      "body": "Comprehensive verification completed across all public and admin modules.",
+      "cover_image_url": "",
+      "status": "draft",
+      "id": "upd-1788857682890",
+      "created_at": "2026-09-08T08:54:42.890Z",
+      "updated_at": "2026-09-08T08:54:42.890Z"
+    },
+    {
+      "id": "upd-3",
+      "title": "Speech: Why Representation Must Be Measurable and Accountable",
+      "slug": "speech-why-representation-must-be-measurable",
+      "category": "speech",
+      "excerpt": "Remarks delivered at the Faculty of Information Technology and Communication Studies town hall.",
+      "body": "Student representation is not a ceremonial ribbon-cutting post. It is an administrative office with an obligation to deliver real, verifiable improvements to everyday campus life. In this speech, we outline our commitment to publishing audited milestone reports.",
+      "cover_image_url": "",
+      "status": "published",
+      "published_at": "2026-09-06T16:00:00Z",
+      "created_at": "2026-09-06T15:00:00Z",
+      "updated_at": "2026-09-06T16:00:00Z"
+    },
+    {
+      "id": "upd-2",
+      "title": "Student Voice Survey Passes 800 Verified Responses",
+      "slug": "student-voice-survey-passes-800-responses",
+      "category": "milestone",
+      "excerpt": "Over 800 female students have shared their campus priorities in our ongoing baseline study.",
+      "body": "We are proud to announce that the Women's Campus Needs Survey has received over 800 detailed responses from both regular and evening stream students. Early data highlights career development workshops and campus transit safety as top student concerns.",
+      "cover_image_url": "",
+      "status": "published",
+      "published_at": "2026-09-04T14:30:00Z",
+      "created_at": "2026-09-04T12:00:00Z",
+      "updated_at": "2026-09-04T14:30:00Z"
+    },
+    {
+      "id": "upd-1",
+      "title": "Campus Engagement: Listening Tour Begins Across Hostels",
+      "slug": "campus-engagement-listening-tour-begins",
+      "category": "engagement",
+      "excerpt": "Meeting students across campus hostels to document priority welfare and security challenges.",
+      "body": "Our campaign team officially launched the campus listening tour this week, visiting five major student hostels around the UPSA campus perimeter. Students shared candid insights on security lighting, water pressure consistency, and study space availability during examination periods. Every point documented will directly shape our policy platform.",
+      "cover_image_url": "",
+      "status": "published",
+      "published_at": "2026-09-01T10:00:00Z",
+      "created_at": "2026-09-01T09:00:00Z",
+      "updated_at": "2026-09-01T10:00:00Z"
+    }
+  ],
+  "events": [
+    {
+      "id": "evt-1",
+      "name": "Campus Town Hall: Women in Leadership & Student Welfare",
+      "event_date": "2026-09-20",
+      "event_time": "4:00 PM - 6:00 PM",
+      "venue": "LBC Auditorium, UPSA Campus",
+      "description": "An open forum discussing student welfare priorities, hostel security solutions, and academic balance with guest alumnae speakers.",
+      "registration_link": "https://forms.gle/townhall-reg",
+      "status": "published",
+      "created_at": "2026-09-02T10:00:00Z",
+      "updated_at": "2026-09-02T10:00:00Z"
+    },
+    {
+      "id": "evt-2",
+      "name": "CV Clinic & LinkedIn Optimization Workshop",
+      "event_date": "2026-09-28",
+      "event_time": "2:00 PM - 5:00 PM",
+      "venue": "Virtual / Zoom & Student Centre Lab 3",
+      "description": "Hands-on review with corporate HR partners to prepare penultimate and final year students for national service and graduate roles.",
+      "registration_link": "https://forms.gle/cvclinic-reg",
+      "status": "published",
+      "created_at": "2026-09-03T11:00:00Z",
+      "updated_at": "2026-09-03T11:00:00Z"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "tst-1",
+      "name": "Akosua Mensah",
+      "programme_role": "BSc. Banking & Finance, Level 400",
+      "statement": "She has consistently championed student issues on our course committees without waiting for campaign season. That consistency is what UPSA women need.",
+      "photo_url": "",
+      "consent_confirmed": true,
+      "status": "published",
+      "created_at": "2026-09-03T09:00:00Z"
+    },
+    {
+      "id": "tst-2",
+      "name": "Deborah Tetteh",
+      "programme_role": "BA Public Relations, Level 300",
+      "statement": "Her focus on data-driven policy rather than vague promises stands out. She listened to our hostel transit concerns and brought practical solutions.",
+      "photo_url": "",
+      "consent_confirmed": true,
+      "status": "published",
+      "created_at": "2026-09-04T10:00:00Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788853350080",
+      "created_at": "2026-09-08T07:42:30.080Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788853465042",
+      "created_at": "2026-09-08T07:44:25.042Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788853654957",
+      "created_at": "2026-09-08T07:47:34.957Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788854224679",
+      "created_at": "2026-09-08T07:57:04.679Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788855683708",
+      "created_at": "2026-09-08T08:21:23.708Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788856688914",
+      "created_at": "2026-09-08T08:38:08.914Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788856992265",
+      "created_at": "2026-09-08T08:43:12.265Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788857266192",
+      "created_at": "2026-09-08T08:47:46.192Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788857401946",
+      "created_at": "2026-09-08T08:50:01.946Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788857557788",
+      "created_at": "2026-09-08T08:52:37.788Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788857684365",
+      "created_at": "2026-09-08T08:54:44.365Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788857743423",
+      "created_at": "2026-09-08T08:55:43.423Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788857757899",
+      "created_at": "2026-09-08T08:55:57.899Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788857830521",
+      "created_at": "2026-09-08T08:57:10.521Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788857846808",
+      "created_at": "2026-09-08T08:57:26.808Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788858585515",
+      "created_at": "2026-09-08T09:09:45.515Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788858605929",
+      "created_at": "2026-09-08T09:10:05.929Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788858658709",
+      "created_at": "2026-09-08T09:10:58.709Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788858670093",
+      "created_at": "2026-09-08T09:11:10.093Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788858716039",
+      "created_at": "2026-09-08T09:11:56.039Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788858726973",
+      "created_at": "2026-09-08T09:12:06.973Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788858883619",
+      "created_at": "2026-09-08T09:14:43.619Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788858894710",
+      "created_at": "2026-09-08T09:14:54.710Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788859254808",
+      "created_at": "2026-09-08T09:20:54.808Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788859726350",
+      "created_at": "2026-09-08T09:28:46.350Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788860253768",
+      "created_at": "2026-09-08T09:37:33.768Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1788860347100",
+      "created_at": "2026-09-08T09:39:07.100Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788860767050",
+      "created_at": "2026-09-08T09:46:07.050Z"
+    },
+    {
+      "name": "Efua Baidoo",
+      "programme_role": "Level 400 Student",
+      "statement": "Passionate advocate with unmatched execution integrity.",
+      "photo_url": "",
+      "video_url": "",
+      "consent_confirmed": true,
+      "status": "draft",
+      "id": "tst-1788861058455",
+      "created_at": "2026-09-08T09:50:58.455Z"
+    }
+  ],
+  "faqItems": [
+    {
+      "id": "faq-1",
+      "category": "About the Candidate",
+      "question": "What is the candidate's academic background and student involvement?",
+      "answer": "The candidate is an honours student in the Faculty of Accounting and Finance with three years of active leadership across faculty associations, student committees, and volunteer campus outreach.",
+      "sort_order": 1,
+      "status": "published",
+      "created_at": "2026-09-01T08:00:00Z"
+    },
+    {
+      "id": "faq-2",
+      "category": "Why She Is Contesting",
+      "question": "What motivated her to contest for SRC Women's Commissioner?",
+      "answer": "To transform the office from purely ceremonial activities into a proactive welfare, security, and career advocacy institution that serves both morning, afternoon, and evening stream students.",
+      "sort_order": 2,
+      "status": "published",
+      "created_at": "2026-09-01T08:00:00Z"
+    },
+    {
+      "id": "faq-3",
+      "category": "Role of the SRC Women's Commissioner",
+      "question": "What are the formal constitutional responsibilities of this office?",
+      "answer": "Under the UPSA SRC Constitution, the Women's Commissioner advocates for the specific welfare, security, and academic interests of female students, chairs the Women's Commission, and coordinates targeted developmental programmes.",
+      "sort_order": 3,
+      "status": "published",
+      "created_at": "2026-09-01T08:00:00Z"
+    },
+    {
+      "id": "faq-4",
+      "category": "Campaign Agenda",
+      "question": "When will the full policy agenda be officially unveiled?",
+      "answer": "The policy platform is currently in Teaser Mode while we incorporate final findings from our campus-wide survey. It will be officially launched at the upcoming campus town hall.",
+      "sort_order": 4,
+      "status": "published",
+      "created_at": "2026-09-01T08:00:00Z"
+    },
+    {
+      "id": "faq-5",
+      "category": "How Policies Will Be Implemented",
+      "question": "How will planned initiatives be funded and sustained?",
+      "answer": "Through statutory SRC committee budget allocations combined with transparent corporate sponsorships and alumni network partnerships, with every expenditure publicly disclosed.",
+      "sort_order": 5,
+      "status": "published",
+      "created_at": "2026-09-01T08:00:00Z"
+    },
+    {
+      "id": "faq-6",
+      "category": "How Students Can Participate",
+      "question": "How can students join the campaign or contribute ideas?",
+      "answer": "You can submit suggestions through the Student Voice section or register as an ambassador or campaign team member via the \"Join the Movement\" page.",
+      "sort_order": 6,
+      "status": "published",
+      "created_at": "2026-09-01T08:00:00Z"
+    },
+    {
+      "id": "faq-7",
+      "category": "How to Contact the Candidate",
+      "question": "What is the fastest way to reach the campaign team?",
+      "answer": "Via our verified campaign WhatsApp channel, by direct phone call, or using the contact form on this website. Our team responds within 24 hours.",
+      "sort_order": 7,
+      "status": "published",
+      "created_at": "2026-09-01T08:00:00Z"
+    }
+  ],
+  "mediaGallery": [
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788853350086",
+      "created_at": "2026-09-08T07:42:30.086Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788853465052",
+      "created_at": "2026-09-08T07:44:25.052Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788853654988",
+      "created_at": "2026-09-08T07:47:34.988Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788854224686",
+      "created_at": "2026-09-08T07:57:04.686Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788855683722",
+      "created_at": "2026-09-08T08:21:23.722Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788856688923",
+      "created_at": "2026-09-08T08:38:08.923Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788857743437",
+      "created_at": "2026-09-08T08:55:43.437Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788857830533",
+      "created_at": "2026-09-08T08:57:10.533Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788858585526",
+      "created_at": "2026-09-08T09:09:45.526Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788858658721",
+      "created_at": "2026-09-08T09:10:58.721Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788858716054",
+      "created_at": "2026-09-08T09:11:56.054Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788858883630",
+      "created_at": "2026-09-08T09:14:43.630Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788859254820",
+      "created_at": "2026-09-08T09:20:54.820Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788859726361",
+      "created_at": "2026-09-08T09:28:46.361Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788860253777",
+      "created_at": "2026-09-08T09:37:33.777Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1788860347111",
+      "created_at": "2026-09-08T09:39:07.111Z"
+    }
+  ],
+  "policyItems": [
+    {
+      "id": "pol-1",
+      "title": "Hostel Transit & Perimeter Safety Initiative",
+      "summary": "Securing extended campus shuttle operations and dedicated security lighting around off-campus hostels.",
+      "issue_statement": "Over 65% of female students residing in off-campus hostels report anxiety walking back from late-evening library sessions due to unlit paths.",
+      "solution": "Establish a designated evening shuttle schedule between the campus gate and major hostels, in coordination with the campus marshal and local security.",
+      "why_it_matters": "Physical safety is a fundamental prerequisite for academic success and peace of mind.",
+      "implementation_plan": "Partner with registered campus commercial transport unions and university estate management.",
+      "timeline": "First 60 days of taking office",
+      "partners": "UPSA Estate Department, Campus Marshals, Hostel Management Union",
+      "cost_notes": "Supported by existing welfare subvention with transport partner subsidies.",
+      "beneficiaries": "Commuter and hostel students, particularly evening stream learners.",
+      "success_indicators": "Zero reported transit security incidents and verified evening ridership logs.",
+      "status": "draft",
+      "created_at": "2026-09-08T07:42:30.061Z",
+      "updated_at": "2026-09-08T07:42:30.061Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788853350084",
+      "created_at": "2026-09-08T07:42:30.084Z",
+      "updated_at": "2026-09-08T07:42:30.084Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788853465050",
+      "created_at": "2026-09-08T07:44:25.050Z",
+      "updated_at": "2026-09-08T07:44:25.050Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788853654985",
+      "created_at": "2026-09-08T07:47:34.985Z",
+      "updated_at": "2026-09-08T07:47:34.985Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788854224684",
+      "created_at": "2026-09-08T07:57:04.684Z",
+      "updated_at": "2026-09-08T07:57:04.684Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788855683718",
+      "created_at": "2026-09-08T08:21:23.717Z",
+      "updated_at": "2026-09-08T08:21:23.717Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788856688920",
+      "created_at": "2026-09-08T08:38:08.920Z",
+      "updated_at": "2026-09-08T08:38:08.920Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788857743433",
+      "created_at": "2026-09-08T08:55:43.433Z",
+      "updated_at": "2026-09-08T08:55:43.433Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788857830528",
+      "created_at": "2026-09-08T08:57:10.528Z",
+      "updated_at": "2026-09-08T08:57:10.528Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788858585523",
+      "created_at": "2026-09-08T09:09:45.523Z",
+      "updated_at": "2026-09-08T09:09:45.523Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788858658718",
+      "created_at": "2026-09-08T09:10:58.718Z",
+      "updated_at": "2026-09-08T09:10:58.718Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788858716049",
+      "created_at": "2026-09-08T09:11:56.049Z",
+      "updated_at": "2026-09-08T09:11:56.049Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788858883627",
+      "created_at": "2026-09-08T09:14:43.627Z",
+      "updated_at": "2026-09-08T09:14:43.627Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788859254817",
+      "created_at": "2026-09-08T09:20:54.817Z",
+      "updated_at": "2026-09-08T09:20:54.817Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788859726357",
+      "created_at": "2026-09-08T09:28:46.357Z",
+      "updated_at": "2026-09-08T09:28:46.357Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788860253775",
+      "created_at": "2026-09-08T09:37:33.775Z",
+      "updated_at": "2026-09-08T09:37:33.775Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1788860347107",
+      "created_at": "2026-09-08T09:39:07.107Z",
+      "updated_at": "2026-09-08T09:39:07.107Z"
+    }
+  ],
+  "contactSubmissions": [
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788861093439",
+      "status": "new",
+      "created_at": "2026-09-08T09:51:33.439Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788861076447",
+      "status": "new",
+      "created_at": "2026-09-08T09:51:16.447Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788860807462",
+      "status": "new",
+      "created_at": "2026-09-08T09:46:47.462Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788860787964",
+      "status": "new",
+      "created_at": "2026-09-08T09:46:27.964Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788858919212",
+      "status": "new",
+      "created_at": "2026-09-08T09:15:19.212Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788858906480",
+      "status": "new",
+      "created_at": "2026-09-08T09:15:06.480Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788858752227",
+      "status": "new",
+      "created_at": "2026-09-08T09:12:32.227Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788858739004",
+      "status": "new",
+      "created_at": "2026-09-08T09:12:19.004Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788858697525",
+      "status": "new",
+      "created_at": "2026-09-08T09:11:37.525Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788858683226",
+      "status": "new",
+      "created_at": "2026-09-08T09:11:23.226Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788858637158",
+      "status": "new",
+      "created_at": "2026-09-08T09:10:37.158Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788858623798",
+      "status": "new",
+      "created_at": "2026-09-08T09:10:23.799Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857886556",
+      "status": "new",
+      "created_at": "2026-09-08T08:58:06.556Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857866807",
+      "status": "new",
+      "created_at": "2026-09-08T08:57:46.807Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857800593",
+      "status": "new",
+      "created_at": "2026-09-08T08:56:40.593Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857778667",
+      "status": "new",
+      "created_at": "2026-09-08T08:56:18.667Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857722514",
+      "status": "new",
+      "created_at": "2026-09-08T08:55:22.514Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857703782",
+      "status": "new",
+      "created_at": "2026-09-08T08:55:03.782Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857612478",
+      "status": "new",
+      "created_at": "2026-09-08T08:53:32.478Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857586004",
+      "status": "new",
+      "created_at": "2026-09-08T08:53:06.004Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857457474",
+      "status": "new",
+      "created_at": "2026-09-08T08:50:57.474Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857429378",
+      "status": "new",
+      "created_at": "2026-09-08T08:50:29.378Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857338005",
+      "status": "new",
+      "created_at": "2026-09-08T08:48:58.005Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857304383",
+      "status": "new",
+      "created_at": "2026-09-08T08:48:24.383Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857102465",
+      "status": "new",
+      "created_at": "2026-09-08T08:45:02.465Z"
+    },
+    {
+      "name": "Esi Mensah",
+      "programme": "General Student",
+      "contact": "0200999888",
+      "enquiry_category": "General Campaign Enquiry",
+      "message": "Would love to invite the candidate to speak at our department association meeting.",
+      "id": "cnt-1788857038114",
+      "status": "new",
+      "created_at": "2026-09-08T08:43:58.114Z"
+    }
+  ],
+  "studentVoiceSubmissions": [
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788861086469",
+      "status": "new",
+      "created_at": "2026-09-08T09:51:26.469Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788861071964",
+      "status": "new",
+      "created_at": "2026-09-08T09:51:11.964Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788860799636",
+      "status": "new",
+      "created_at": "2026-09-08T09:46:39.636Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788860783147",
+      "status": "new",
+      "created_at": "2026-09-08T09:46:23.147Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788858914279",
+      "status": "new",
+      "created_at": "2026-09-08T09:15:14.279Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788858903367",
+      "status": "new",
+      "created_at": "2026-09-08T09:15:03.367Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788858746953",
+      "status": "new",
+      "created_at": "2026-09-08T09:12:26.953Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788858735900",
+      "status": "new",
+      "created_at": "2026-09-08T09:12:15.900Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788858691307",
+      "status": "new",
+      "created_at": "2026-09-08T09:11:31.307Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788858680041",
+      "status": "new",
+      "created_at": "2026-09-08T09:11:20.041Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788858632058",
+      "status": "new",
+      "created_at": "2026-09-08T09:10:32.058Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788858620560",
+      "status": "new",
+      "created_at": "2026-09-08T09:10:20.560Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857879488",
+      "status": "new",
+      "created_at": "2026-09-08T08:57:59.488Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857861444",
+      "status": "new",
+      "created_at": "2026-09-08T08:57:41.444Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857793072",
+      "status": "new",
+      "created_at": "2026-09-08T08:56:33.072Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857773007",
+      "status": "new",
+      "created_at": "2026-09-08T08:56:13.007Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857715529",
+      "status": "new",
+      "created_at": "2026-09-08T08:55:15.529Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857698608",
+      "status": "new",
+      "created_at": "2026-09-08T08:54:58.608Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857605319",
+      "status": "new",
+      "created_at": "2026-09-08T08:53:25.319Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857580593",
+      "status": "new",
+      "created_at": "2026-09-08T08:53:00.593Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857450313",
+      "status": "new",
+      "created_at": "2026-09-08T08:50:50.313Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857423643",
+      "status": "new",
+      "created_at": "2026-09-08T08:50:23.643Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857324129",
+      "status": "new",
+      "created_at": "2026-09-08T08:48:44.129Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857292269",
+      "status": "new",
+      "created_at": "2026-09-08T08:48:12.269Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857096702",
+      "status": "new",
+      "created_at": "2026-09-08T08:44:56.702Z"
+    },
+    {
+      "type": "concern",
+      "message": "Need better lighting near the hostel walkway for late night study sessions.",
+      "id": "vce-1788857028145",
+      "status": "new",
+      "created_at": "2026-09-08T08:43:48.145Z"
+    }
+  ],
+  "volunteerRegistrations": [
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788861088200",
+      "created_at": "2026-09-08T09:51:28.200Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788861073119",
+      "created_at": "2026-09-08T09:51:13.119Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788860802371",
+      "created_at": "2026-09-08T09:46:42.371Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788860784603",
+      "created_at": "2026-09-08T09:46:24.603Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788858915514",
+      "created_at": "2026-09-08T09:15:15.514Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788858904214",
+      "created_at": "2026-09-08T09:15:04.214Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788858748154",
+      "created_at": "2026-09-08T09:12:28.154Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788858736757",
+      "created_at": "2026-09-08T09:12:16.757Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788858693756",
+      "created_at": "2026-09-08T09:11:33.756Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788858680943",
+      "created_at": "2026-09-08T09:11:20.943Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788858633331",
+      "created_at": "2026-09-08T09:10:33.331Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788858621511",
+      "created_at": "2026-09-08T09:10:21.511Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857881357",
+      "created_at": "2026-09-08T08:58:01.357Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857862868",
+      "created_at": "2026-09-08T08:57:42.868Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857794931",
+      "created_at": "2026-09-08T08:56:34.931Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857774466",
+      "created_at": "2026-09-08T08:56:14.466Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857717314",
+      "created_at": "2026-09-08T08:55:17.314Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857699968",
+      "created_at": "2026-09-08T08:54:59.968Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857607102",
+      "created_at": "2026-09-08T08:53:27.102Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857582025",
+      "created_at": "2026-09-08T08:53:02.025Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857452029",
+      "created_at": "2026-09-08T08:50:52.029Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857425382",
+      "created_at": "2026-09-08T08:50:25.382Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857325837",
+      "created_at": "2026-09-08T08:48:45.837Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857293651",
+      "created_at": "2026-09-08T08:48:13.651Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857098225",
+      "created_at": "2026-09-08T08:44:58.225Z"
+    },
+    {
+      "full_name": "Akua Serwaa",
+      "programme": "BSc Information Technology",
+      "level": "100",
+      "phone": "0244111222",
+      "email": "akua.serwaa@upsamail.edu.gh",
+      "area_of_interest": "Event Planning & Logistics",
+      "availability": "Full Time (Most Days)",
+      "registration_type": "volunteer",
+      "id": "vol-1788857029094",
+      "created_at": "2026-09-08T08:43:49.094Z"
+    }
+  ],
+  "adminUsers": [
+    {
+      "id": "adm-1",
+      "name": "Aka (Lead Admin)",
+      "email": "admin@upsa-src-wc.org",
+      "role_label": "Campaign Manager & ICT Lead",
+      "permission_scope": [
+        "manage_settings",
+        "manage_identity",
+        "manage_policy",
+        "manage_updates",
+        "manage_media",
+        "manage_events",
+        "manage_voice",
+        "manage_volunteers",
+        "manage_users",
+        "publish"
+      ],
+      "created_at": "2026-09-08T07:42:30.061Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788861058459",
+      "created_at": "2026-09-08T09:50:58.459Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_CAMPAIGN_UPDATE",
+      "entity": "CampaignUpdate",
+      "entity_id": "primary",
+      "details": "CREATE_CAMPAIGN_UPDATE executed on CampaignUpdate (primary)",
+      "id": "aud-1788861056788",
+      "created_at": "2026-09-08T09:50:56.788Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788861053991",
+      "created_at": "2026-09-08T09:50:53.991Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788861052703",
+      "created_at": "2026-09-08T09:50:52.703Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788860767052",
+      "created_at": "2026-09-08T09:46:07.052Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_CAMPAIGN_UPDATE",
+      "entity": "CampaignUpdate",
+      "entity_id": "primary",
+      "details": "CREATE_CAMPAIGN_UPDATE executed on CampaignUpdate (primary)",
+      "id": "aud-1788860765012",
+      "created_at": "2026-09-08T09:46:05.012Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788860761654",
+      "created_at": "2026-09-08T09:46:01.654Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788860759891",
+      "created_at": "2026-09-08T09:45:59.891Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788858894712",
+      "created_at": "2026-09-08T09:14:54.712Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_CAMPAIGN_UPDATE",
+      "entity": "CampaignUpdate",
+      "entity_id": "primary",
+      "details": "CREATE_CAMPAIGN_UPDATE executed on CampaignUpdate (primary)",
+      "id": "aud-1788858893433",
+      "created_at": "2026-09-08T09:14:53.433Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788858891736",
+      "created_at": "2026-09-08T09:14:51.736Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788858890833",
+      "created_at": "2026-09-08T09:14:50.833Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788858726975",
+      "created_at": "2026-09-08T09:12:06.975Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_CAMPAIGN_UPDATE",
+      "entity": "CampaignUpdate",
+      "entity_id": "primary",
+      "details": "CREATE_CAMPAIGN_UPDATE executed on CampaignUpdate (primary)",
+      "id": "aud-1788858725908",
+      "created_at": "2026-09-08T09:12:05.908Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788858723941",
+      "created_at": "2026-09-08T09:12:03.941Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788858723093",
+      "created_at": "2026-09-08T09:12:03.093Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788858670094",
+      "created_at": "2026-09-08T09:11:10.094Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_CAMPAIGN_UPDATE",
+      "entity": "CampaignUpdate",
+      "entity_id": "primary",
+      "details": "CREATE_CAMPAIGN_UPDATE executed on CampaignUpdate (primary)",
+      "id": "aud-1788858667762",
+      "created_at": "2026-09-08T09:11:07.762Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788858666131",
+      "created_at": "2026-09-08T09:11:06.131Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788858665300",
+      "created_at": "2026-09-08T09:11:05.300Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788858605931",
+      "created_at": "2026-09-08T09:10:05.931Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_CAMPAIGN_UPDATE",
+      "entity": "CampaignUpdate",
+      "entity_id": "primary",
+      "details": "CREATE_CAMPAIGN_UPDATE executed on CampaignUpdate (primary)",
+      "id": "aud-1788858598197",
+      "created_at": "2026-09-08T09:09:58.197Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788858596324",
+      "created_at": "2026-09-08T09:09:56.324Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788858595396",
+      "created_at": "2026-09-08T09:09:55.396Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788857846809",
+      "created_at": "2026-09-08T08:57:26.809Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_CAMPAIGN_UPDATE",
+      "entity": "CampaignUpdate",
+      "entity_id": "primary",
+      "details": "CREATE_CAMPAIGN_UPDATE executed on CampaignUpdate (primary)",
+      "id": "aud-1788857845236",
+      "created_at": "2026-09-08T08:57:25.236Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788857841793",
+      "created_at": "2026-09-08T08:57:21.793Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788857840326",
+      "created_at": "2026-09-08T08:57:20.326Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788857757901",
+      "created_at": "2026-09-08T08:55:57.901Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_CAMPAIGN_UPDATE",
+      "entity": "CampaignUpdate",
+      "entity_id": "primary",
+      "details": "CREATE_CAMPAIGN_UPDATE executed on CampaignUpdate (primary)",
+      "id": "aud-1788857756269",
+      "created_at": "2026-09-08T08:55:56.269Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788857753302",
+      "created_at": "2026-09-08T08:55:53.302Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788857751818",
+      "created_at": "2026-09-08T08:55:51.818Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788857684367",
+      "created_at": "2026-09-08T08:54:44.367Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_CAMPAIGN_UPDATE",
+      "entity": "CampaignUpdate",
+      "entity_id": "primary",
+      "details": "CREATE_CAMPAIGN_UPDATE executed on CampaignUpdate (primary)",
+      "id": "aud-1788857682892",
+      "created_at": "2026-09-08T08:54:42.892Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788857680305",
+      "created_at": "2026-09-08T08:54:40.305Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788857678677",
+      "created_at": "2026-09-08T08:54:38.677Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788857557790",
+      "created_at": "2026-09-08T08:52:37.790Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788857546326",
+      "created_at": "2026-09-08T08:52:26.326Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788857544813",
+      "created_at": "2026-09-08T08:52:24.813Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788857401948",
+      "created_at": "2026-09-08T08:50:01.948Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788857390934",
+      "created_at": "2026-09-08T08:49:50.934Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788857389525",
+      "created_at": "2026-09-08T08:49:49.525Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788857266194",
+      "created_at": "2026-09-08T08:47:46.194Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788857256820",
+      "created_at": "2026-09-08T08:47:36.820Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788857255687",
+      "created_at": "2026-09-08T08:47:35.687Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788857043682",
+      "created_at": "2026-09-08T08:44:03.682Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788857042662",
+      "created_at": "2026-09-08T08:44:02.662Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "CREATE_TESTIMONIAL",
+      "entity": "Testimonial",
+      "entity_id": "primary",
+      "details": "CREATE_TESTIMONIAL executed on Testimonial (primary)",
+      "id": "aud-1788856992267",
+      "created_at": "2026-09-08T08:43:12.267Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_SITE_SETTINGS",
+      "entity": "SiteSettings",
+      "entity_id": "primary",
+      "details": "UPDATE_SITE_SETTINGS executed on SiteSettings (primary)",
+      "id": "aud-1788856982971",
+      "created_at": "2026-09-08T08:43:02.971Z"
+    },
+    {
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "UPDATE_CANDIDATE_PROFILE",
+      "entity": "CandidateProfile",
+      "entity_id": "primary",
+      "details": "UPDATE_CANDIDATE_PROFILE executed on CandidateProfile (primary)",
+      "id": "aud-1788856982039",
+      "created_at": "2026-09-08T08:43:02.039Z"
+    },
+    {
+      "id": "aud-1",
+      "admin_user_id": "adm-1",
+      "admin_name": "Aka (Lead Admin)",
+      "action": "INITIALIZE_SYSTEM",
+      "entity": "System",
+      "entity_id": "primary",
+      "details": "Initialized campaign platform with launch-phase teaser configuration.",
+      "created_at": "2026-09-08T07:42:30.061Z"
+    }
+  ]
+}

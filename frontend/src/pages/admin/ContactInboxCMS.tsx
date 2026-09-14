@@ -1,28 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { Inbox, Mail, Phone, CheckCircle2, MessageSquare, AlertCircle } from 'lucide-react';
+import { Inbox, Search } from 'lucide-react';
 import { api } from '../../api/client.js';
 import { ContactSubmission, SubmissionStatus } from '../../types/index.js';
-import { LoadingState } from '../../components/StateView.js';
-
+import { LoadingState, ErrorState, EmptyState } from '../../components/StateView.js';
 import { useToast } from '../../context/ToastContext.js';
+
+const PAGE_SIZE = 10;
 
 export const ContactInboxCMS: React.FC = () => {
   const toast = useToast();
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
+    document.title = 'Contact Inbox CMS | Campaign Staff Portal';
     fetchSubmissions();
   }, []);
 
   const fetchSubmissions = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await api.getContactSubmissions();
       setSubmissions(data);
-    } catch (err) {
-      console.error('Failed to load contact inbox', err);
+    } catch (err: any) {
+      setError(err.message || 'Failed to load contact inbox submissions.');
     } finally {
       setLoading(false);
     }
@@ -32,19 +38,40 @@ export const ContactInboxCMS: React.FC = () => {
     try {
       await api.updateContactStatus(id, newStatus);
       setSubmissions(submissions.map(s => s.id === id ? { ...s, status: newStatus } : s));
-      toast.success('Status Updated', `Inquiry status updated to "${newStatus}".`);
+      toast.success('Status Updated', `Inquiry status changed to "${newStatus}".`);
     } catch (err: any) {
-      toast.error('Update Failed', err.message || 'Status update failed.');
+      toast.error('Update Failed', err.message || 'Failed to update inquiry status.');
     }
   };
-
 
   if (loading) {
     return <LoadingState message="Loading secretariat contact inbox..." />;
   }
 
-  const filtered = submissions.filter(s => statusFilter === 'all' || s.status === statusFilter);
+  if (error) {
+    return (
+      <ErrorState
+        title="Failed to Load Inquiries"
+        message={error}
+        onRetry={fetchSubmissions}
+      />
+    );
+  }
+
+  const filtered = submissions.filter((s) => {
+    const matchesStatus = statusFilter === 'all' || s.status === statusFilter;
+    const matchesSearch =
+      searchQuery.trim() === '' ||
+      s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      s.contact.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      s.message.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      s.programme.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesStatus && matchesSearch;
+  });
+
   const unreadCount = submissions.filter(s => s.status === 'new').length;
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const paginatedItems = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 pb-20">
@@ -68,14 +95,30 @@ export const ContactInboxCMS: React.FC = () => {
       </div>
 
       <div className="campaign-card !p-0 overflow-hidden">
+        {/* Filter & Search Bar */}
+        <div className="p-4 border-b border-border bg-muted/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="relative w-full sm:w-72">
+            <Search className="w-4 h-4 absolute left-3 top-2.5 text-ink/40" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setCurrentPage(1);
+              }}
+              placeholder="Search by name, contact, message..."
+              className="w-full pl-9 pr-3 py-1.5 rounded-lg border border-border text-xs focus:border-brand-gold bg-white"
+            />
+          </div>
 
-        {/* Filter Bar */}
-        <div className="p-4 border-b border-border bg-muted/20 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-ink/70">Filter Status:</span>
+            <span className="text-xs font-bold text-ink/70">Status:</span>
             <select
               value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
+              onChange={(e) => {
+                setStatusFilter(e.target.value);
+                setCurrentPage(1);
+              }}
               className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-border bg-white"
             >
               <option value="all">All Inquiries ({submissions.length})</option>
@@ -88,12 +131,13 @@ export const ContactInboxCMS: React.FC = () => {
         </div>
 
         <div className="divide-y divide-border">
-          {filtered.length === 0 ? (
-            <div className="p-12 text-center text-xs text-ink/50">
-              No inquiries found matching this filter.
-            </div>
+          {paginatedItems.length === 0 ? (
+            <EmptyState
+              title="No Inquiries Found"
+              message={searchQuery ? 'No messages matched your search query.' : 'No contact inquiries logged yet.'}
+            />
           ) : (
-            filtered.map((item) => (
+            paginatedItems.map((item) => (
               <div key={item.id} className="p-5 hover:bg-muted/10 transition-colors space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="space-y-0.5">
@@ -115,7 +159,7 @@ export const ContactInboxCMS: React.FC = () => {
 
                   <div className="flex items-center gap-3">
                     <span className="text-[11px] text-ink/50">
-                      {new Date(item.created_at).toLocaleDateString()}
+                      {new Date(item.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                     </span>
                     <select
                       value={item.status}
@@ -143,6 +187,31 @@ export const ContactInboxCMS: React.FC = () => {
             ))
           )}
         </div>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="p-4 border-t border-border bg-muted/10 flex items-center justify-between text-xs">
+            <span className="text-ink/60">
+              Showing page {currentPage} of {totalPages} ({filtered.length} total)
+            </span>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="px-3 py-1 rounded border border-border bg-white text-ink/70 hover:text-ink disabled:opacity-40"
+              >
+                Previous
+              </button>
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 rounded border border-border bg-white text-ink/70 hover:text-ink disabled:opacity-40"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

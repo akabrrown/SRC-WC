@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Newspaper, Plus, Save, Trash2, Edit2, ArrowLeft, CheckCircle2, AlertCircle, Calendar, Eye } from 'lucide-react';
+import { Newspaper, Plus, Save, Trash2, Edit2, ArrowLeft, Search } from 'lucide-react';
 import { api } from '../../api/client.js';
 import { CampaignUpdate, UpdateCategory, ContentStatus } from '../../types/index.js';
-import { LoadingState } from '../../components/StateView.js';
-
+import { LoadingState, ErrorState, EmptyState } from '../../components/StateView.js';
 import { useToast } from '../../context/ToastContext.js';
 import { ConfirmModal } from '../../components/ConfirmModal.js';
 
@@ -20,24 +19,28 @@ export const UpdatesCMS: React.FC = () => {
   const toast = useToast();
   const [updates, setUpdates] = useState<CampaignUpdate[]>([]);
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [editingPost, setEditingPost] = useState<Partial<CampaignUpdate> | null>(null);
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [saving, setSaving] = useState<boolean>(false);
-  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
+  const [deleteTargetPost, setDeleteTargetPost] = useState<CampaignUpdate | null>(null);
   const [deleting, setDeleting] = useState<boolean>(false);
 
   useEffect(() => {
+    document.title = 'Campaign Dispatches CMS | Campaign Staff Portal';
     fetchUpdates();
   }, []);
 
   const fetchUpdates = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await api.getAllUpdatesAdmin();
       setUpdates(data);
     } catch (err: any) {
-      toast.error('Fetch Failed', err.message || 'Failed to fetch updates.');
+      setError(err.message || 'Failed to fetch updates.');
     } finally {
       setLoading(false);
     }
@@ -58,13 +61,13 @@ export const UpdatesCMS: React.FC = () => {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editingPost || !editingPost.title || !editingPost.body) {
-      toast.error('Validation Error', 'Title and body are required.');
+    if (!editingPost || !editingPost.title?.trim() || !editingPost.body?.trim()) {
+      toast.error('Validation Error', 'Title and article body are required.');
       return;
     }
     setSaving(true);
 
-    const slug = editingPost.slug || editingPost.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const slug = editingPost.slug?.trim() || editingPost.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     const excerpt = editingPost.excerpt && editingPost.excerpt.trim().length >= 5
       ? editingPost.excerpt.trim()
       : editingPost.body.slice(0, 140) + '...';
@@ -97,20 +100,19 @@ export const UpdatesCMS: React.FC = () => {
   };
 
   const confirmDelete = async () => {
-    if (!deleteTargetId) return;
+    if (!deleteTargetPost) return;
     setDeleting(true);
     try {
-      await api.deleteUpdate(deleteTargetId);
-      setUpdates(updates.filter(u => u.id !== deleteTargetId));
-      toast.success('Update Deleted', 'Campaign dispatch has been permanently removed.');
-      setDeleteTargetId(null);
+      await api.deleteUpdate(deleteTargetPost.id);
+      setUpdates(updates.filter(u => u.id !== deleteTargetPost.id));
+      toast.success('Update Deleted', `Campaign dispatch "${deleteTargetPost.title}" removed.`);
+      setDeleteTargetPost(null);
     } catch (err: any) {
       toast.error('Delete Failed', err.message || 'Failed to delete update.');
     } finally {
       setDeleting(false);
     }
   };
-
 
   const getStatusBadge = (status: ContentStatus) => {
     switch (status) {
@@ -131,7 +133,25 @@ export const UpdatesCMS: React.FC = () => {
     return <LoadingState message="Loading campaign dispatches..." />;
   }
 
-  const filteredUpdates = updates.filter(u => statusFilter === 'all' || u.status === statusFilter);
+  if (error) {
+    return (
+      <ErrorState
+        title="Failed to Load Updates"
+        message={error}
+        onRetry={fetchUpdates}
+      />
+    );
+  }
+
+  const filteredUpdates = updates.filter((u) => {
+    const matchesStatus = statusFilter === 'all' || u.status === statusFilter;
+    const matchesSearch =
+      searchQuery.trim() === '' ||
+      u.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      u.body.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      u.slug.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesStatus && matchesSearch;
+  });
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 pb-20">
@@ -145,14 +165,14 @@ export const UpdatesCMS: React.FC = () => {
             Campaign Updates & Dispatches
           </h1>
           <p className="text-xs text-ink/65">
-            Draft, review, approve, and publish news articles and announcements for students.
+            Draft, review, approve, and publish news dispatches, hall tour reports, and press statements.
           </p>
         </div>
 
         {!editingPost && (
           <button
             onClick={handleCreateNew}
-            className="btn-gold text-xs font-bold py-2.5 px-5 gap-2 shadow-sm"
+            className="btn-gold text-xs font-bold py-2.5 px-5 gap-2 shadow-sm flex items-center"
           >
             <Plus className="w-4 h-4" />
             <span>New Dispatch</span>
@@ -162,12 +182,11 @@ export const UpdatesCMS: React.FC = () => {
 
       {editingPost ? (
         <form onSubmit={handleSave} className="space-y-6">
-
           <div className="flex items-center justify-between">
             <button
               type="button"
               onClick={() => { setEditingPost(null); setIsCreating(false); }}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-navy hover:text-brand-gold"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-navy hover:text-brand-gold transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Updates List</span>
@@ -296,7 +315,7 @@ export const UpdatesCMS: React.FC = () => {
                   <button
                     type="submit"
                     disabled={saving}
-                    className="btn-gold w-full text-xs font-bold py-3 gap-2"
+                    className="btn-gold w-full text-xs font-bold py-3 gap-2 flex items-center justify-center"
                   >
                     <Save className="w-4 h-4" />
                     <span>{saving ? 'Saving...' : 'Save & Update Dispatch'}</span>
@@ -308,11 +327,21 @@ export const UpdatesCMS: React.FC = () => {
         </form>
       ) : (
         <div className="campaign-card !p-0 overflow-hidden">
-          {/* Filter Bar */}
+          {/* Search & Filter Bar */}
+          <div className="p-4 border-b border-border flex flex-col sm:flex-row items-center justify-between gap-4 bg-muted/20">
+            <div className="relative w-full sm:w-72">
+              <Search className="w-4 h-4 absolute left-3 top-2.5 text-ink/40" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search updates by title or body..."
+                className="w-full pl-9 pr-3 py-1.5 rounded-lg border border-border text-xs focus:border-brand-gold bg-white"
+              />
+            </div>
 
-          <div className="p-4 border-b border-border flex items-center justify-between gap-4 bg-muted/20">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-ink/70">Filter Status:</span>
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+              <span className="text-xs font-bold text-ink/70">Status:</span>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -372,14 +401,14 @@ export const UpdatesCMS: React.FC = () => {
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => { setEditingPost(post); setIsCreating(false); }}
-                            className="p-1.5 rounded hover:bg-muted text-brand-navy"
+                            className="p-1.5 rounded hover:bg-muted text-brand-navy transition-colors"
                             title="Edit"
                           >
                             <Edit2 className="w-4 h-4" />
                           </button>
                           <button
-                            onClick={() => setDeleteTargetId(post.id)}
-                            className="p-1.5 rounded hover:bg-red-50 text-red-600"
+                            onClick={() => setDeleteTargetPost(post)}
+                            className="p-1.5 rounded hover:bg-red-50 text-red-600 transition-colors"
                             title="Delete"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -395,18 +424,17 @@ export const UpdatesCMS: React.FC = () => {
         </div>
       )}
 
-      {/* Reusable Confirm Deletion Modal */}
+      {/* Delete Confirmation Modal with Named Dispatch Title */}
       <ConfirmModal
-        isOpen={!!deleteTargetId}
+        isOpen={!!deleteTargetPost}
         title="Delete Campaign Dispatch"
-        message="Are you sure you want to delete this campaign dispatch? This action cannot be undone."
+        message={`Are you sure you want to permanently delete the campaign dispatch "${deleteTargetPost?.title}"? This action cannot be undone.`}
         confirmText="Delete Dispatch"
         isDestructive={true}
         isLoading={deleting}
         onConfirm={confirmDelete}
-        onCancel={() => setDeleteTargetId(null)}
+        onCancel={() => setDeleteTargetPost(null)}
       />
     </div>
   );
 };
-

@@ -68,4 +68,24 @@ router.put(
   }
 );
 
+// Admin: Remove admin user
+router.delete(
+  '/:id',
+  authenticateAdmin,
+  requirePermissionScope('manage_users'),
+  logAdminAction('DELETE_ADMIN_USER', 'AdminUser'),
+  (req: AuthenticatedRequest, res: Response) => {
+    const id = getParam(req);
+    try {
+      const success = db.deleteAdminUser(id);
+      if (!success) {
+        return res.status(404).json({ title: 'Not Found', detail: 'Admin user not found.' });
+      }
+      res.json({ message: 'Admin user removed successfully.' });
+    } catch (err: any) {
+      res.status(400).json({ title: 'Operation Blocked', detail: err.message || 'Cannot delete user.' });
+    }
+  }
+);
+
 export default router;

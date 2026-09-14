@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Quote, Plus, Save, Trash2, Edit2, CheckCircle, AlertCircle, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { Quote, Plus, Save, Trash2, Edit2, ShieldAlert, Search } from 'lucide-react';
 import { api } from '../../api/client.js';
 import { Testimonial, ContentStatus } from '../../types/index.js';
-import { LoadingState } from '../../components/StateView.js';
-
+import { LoadingState, ErrorState, EmptyState } from '../../components/StateView.js';
 import { useToast } from '../../context/ToastContext.js';
 import { ConfirmModal } from '../../components/ConfirmModal.js';
 
@@ -11,23 +10,28 @@ export const TestimonialsCMS: React.FC = () => {
   const toast = useToast();
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
   const [editingItem, setEditingItem] = useState<Partial<Testimonial> | null>(null);
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [saving, setSaving] = useState<boolean>(false);
-  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
+  const [deleteTargetItem, setDeleteTargetItem] = useState<Testimonial | null>(null);
   const [deleting, setDeleting] = useState<boolean>(false);
 
   useEffect(() => {
+    document.title = 'Voices of Support CMS | Campaign Staff Portal';
     fetchTestimonials();
   }, []);
 
   const fetchTestimonials = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await api.getAllTestimonialsAdmin();
       setTestimonials(data);
     } catch (err: any) {
-      toast.error('Fetch Failed', err.message || 'Failed to load testimonials.');
+      setError(err.message || 'Failed to load endorsements.');
     } finally {
       setLoading(false);
     }
@@ -48,56 +52,76 @@ export const TestimonialsCMS: React.FC = () => {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editingItem || !editingItem.name || !editingItem.statement) {
-      toast.error('Validation Error', 'Name and statement are required.');
+    if (!editingItem) return;
+
+    if (!editingItem.name?.trim() || !editingItem.statement?.trim()) {
+      toast.error('Validation Error', 'Endorser name and quote statement are required.');
       return;
     }
 
     if (editingItem.status === 'published' && !editingItem.consent_confirmed) {
-      toast.error('Consent Gate Violation', 'Consent must be confirmed before publishing a testimonial.');
+      toast.error('Consent Gate Violation', 'Student consent must be explicitly confirmed before publishing.');
       return;
     }
 
     setSaving(true);
-
     try {
       if (isCreating) {
         const created = await api.createTestimonial(editingItem);
         setTestimonials([...testimonials, created]);
-        toast.success('Testimonial Created', `Endorsement for "${created.name}" created.`);
+        toast.success('Endorsement Created', `Endorsement for "${created.name}" recorded.`);
       } else if (editingItem.id) {
         const updated = await api.updateTestimonial(editingItem.id, editingItem);
         setTestimonials(testimonials.map(t => t.id === updated.id ? updated : t));
-        toast.success('Testimonial Saved', `Endorsement for "${updated.name}" updated.`);
+        toast.success('Endorsement Saved', `Endorsement for "${updated.name}" updated successfully.`);
       }
       setEditingItem(null);
       setIsCreating(false);
     } catch (err: any) {
-      toast.error('Save Failed', err.message || 'Failed to save testimonial.');
+      toast.error('Save Failed', err.message || 'Failed to save endorsement.');
     } finally {
       setSaving(false);
     }
   };
 
   const confirmDelete = async () => {
-    if (!deleteTargetId) return;
+    if (!deleteTargetItem) return;
     setDeleting(true);
     try {
-      await api.deleteTestimonial(deleteTargetId);
-      setTestimonials(testimonials.filter(t => t.id !== deleteTargetId));
-      toast.success('Testimonial Removed', 'Endorsement has been deleted.');
-      setDeleteTargetId(null);
+      await api.deleteTestimonial(deleteTargetItem.id);
+      setTestimonials(testimonials.filter(t => t.id !== deleteTargetItem.id));
+      toast.success('Endorsement Removed', `Endorsement by "${deleteTargetItem.name}" deleted.`);
+      setDeleteTargetItem(null);
     } catch (err: any) {
-      toast.error('Delete Failed', err.message || 'Failed to delete.');
+      toast.error('Delete Failed', err.message || 'Failed to delete endorsement.');
     } finally {
       setDeleting(false);
     }
   };
 
-
   if (loading) {
     return <LoadingState message="Loading endorsements and consent records..." />;
   }
+
+  if (error) {
+    return (
+      <ErrorState
+        title="Failed to Load Endorsements"
+        message={error}
+        onRetry={fetchTestimonials}
+      />
+    );
+  }
+
+  const filteredTestimonials = testimonials.filter((t) => {
+    const matchesStatus = statusFilter === 'all' || t.status === statusFilter;
+    const matchesSearch =
+      searchQuery.trim() === '' ||
+      t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t.programme_role.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t.statement.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesStatus && matchesSearch;
+  });
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-20">
@@ -118,7 +142,7 @@ export const TestimonialsCMS: React.FC = () => {
         {!editingItem && (
           <button
             onClick={handleCreateNew}
-            className="btn-gold text-xs font-bold py-2.5 px-5 gap-2 shadow-sm"
+            className="btn-gold text-xs font-bold py-2.5 px-5 gap-2 shadow-sm flex items-center"
           >
             <Plus className="w-4 h-4" />
             <span>New Endorsement</span>
@@ -128,7 +152,6 @@ export const TestimonialsCMS: React.FC = () => {
 
       {editingItem ? (
         <form onSubmit={handleSave} className="campaign-card space-y-5">
-
           <div className="flex items-center justify-between border-b border-border pb-3">
             <h2 className="text-base font-bold text-brand-navy">
               {isCreating ? 'Record New Student Endorsement' : 'Edit Endorsement'}
@@ -136,7 +159,7 @@ export const TestimonialsCMS: React.FC = () => {
             <button
               type="button"
               onClick={() => { setEditingItem(null); setIsCreating(false); }}
-              className="text-xs text-ink/60 hover:text-ink font-semibold"
+              className="text-xs text-ink/60 hover:text-ink font-semibold transition-colors"
             >
               Cancel
             </button>
@@ -212,8 +235,8 @@ export const TestimonialsCMS: React.FC = () => {
                   className="mt-1 w-4 h-4 rounded text-brand-gold focus:ring-brand-gold"
                 />
                 <label htmlFor="consent_check" className="text-xs text-amber-950">
-                  <strong className="block font-bold">Mandatory Student Consent Gate (Spec §5.3 & §7.3)</strong>
-                  I certify that explicit verbal/written consent has been granted by this student for their quote, name, and likeness to be published on the campaign platform.
+                  <strong className="block font-bold">Mandatory Student Consent Gate</strong>
+                  I certify that explicit verbal or written consent has been granted by this student for their quote, name, and likeness to be published on the official campaign platform.
                 </label>
               </div>
             </div>
@@ -245,14 +268,15 @@ export const TestimonialsCMS: React.FC = () => {
             <button
               type="button"
               onClick={() => { setEditingItem(null); setIsCreating(false); }}
-              className="px-4 py-2.5 rounded-lg text-xs font-semibold text-ink/70 hover:bg-muted"
+              disabled={saving}
+              className="px-4 py-2.5 rounded-lg text-xs font-semibold text-ink/70 hover:bg-muted transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving || (editingItem.status === 'published' && !editingItem.consent_confirmed)}
-              className="btn-gold text-xs font-bold py-2.5 px-6 gap-2"
+              className="btn-gold text-xs font-bold py-2.5 px-6 gap-2 flex items-center"
             >
               <Save className="w-4 h-4" />
               <span>{saving ? 'Saving...' : 'Save Endorsement'}</span>
@@ -260,64 +284,103 @@ export const TestimonialsCMS: React.FC = () => {
           </div>
         </form>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {testimonials.map((t) => (
-            <div key={t.id} className="campaign-card flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                    t.consent_confirmed ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
-                  }`}>
-                    {t.consent_confirmed ? 'Consent Confirmed' : 'Awaiting Consent'}
-                  </span>
-                  <span className="badge-published">{t.status}</span>
-                </div>
-
-                <blockquote className="text-xs text-ink/80 italic mb-4 leading-relaxed">
-                  "{t.statement}"
-                </blockquote>
-              </div>
-
-              <div className="pt-3 border-t border-border flex items-center justify-between">
-                <div>
-                  <h4 className="text-xs font-bold text-brand-navy">{t.name}</h4>
-                  <p className="text-[10px] text-ink/50">{t.programme_role}</p>
-                </div>
-
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={() => { setEditingItem(t); setIsCreating(false); }}
-                    className="p-1.5 rounded hover:bg-muted text-brand-navy"
-                    title="Edit"
-                  >
-                    <Edit2 className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => setDeleteTargetId(t.id)}
-                    className="p-1.5 rounded hover:bg-red-50 text-red-600"
-                    title="Delete"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+        <div className="space-y-4">
+          {/* Search & Filter Bar */}
+          <div className="p-4 rounded-xl bg-surface border border-border flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="relative w-full sm:w-72">
+              <Search className="w-4 h-4 absolute left-3 top-2.5 text-ink/40" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search endorsers and quotes..."
+                className="w-full pl-9 pr-3 py-1.5 rounded-lg border border-border text-xs focus:border-brand-gold bg-white"
+              />
             </div>
-          ))}
+
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+              <span className="text-xs font-bold text-ink/70">Status:</span>
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-border bg-white"
+              >
+                <option value="all">All ({testimonials.length})</option>
+                <option value="published">Published</option>
+                <option value="draft">Draft</option>
+                <option value="in_review">In Review</option>
+                <option value="archived">Archived</option>
+              </select>
+            </div>
+          </div>
+
+          {filteredTestimonials.length === 0 ? (
+            <EmptyState
+              title="No Endorsements Found"
+              message={searchQuery ? 'No student endorsements matched your search filter.' : 'No testimonials added yet. Click below to add an endorsement.'}
+              actionText={searchQuery ? undefined : 'New Endorsement'}
+              onAction={searchQuery ? undefined : handleCreateNew}
+            />
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {filteredTestimonials.map((t) => (
+                <div key={t.id} className="campaign-card flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${
+                        t.consent_confirmed ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
+                      }`}>
+                        {t.consent_confirmed ? 'Consent Confirmed' : 'Awaiting Consent'}
+                      </span>
+                      <span className="badge-published">{t.status}</span>
+                    </div>
+
+                    <blockquote className="text-xs text-ink/80 italic mb-4 leading-relaxed">
+                      "{t.statement}"
+                    </blockquote>
+                  </div>
+
+                  <div className="pt-3 border-t border-border flex items-center justify-between">
+                    <div>
+                      <h4 className="text-xs font-bold text-brand-navy">{t.name}</h4>
+                      <p className="text-[10px] text-ink/50">{t.programme_role}</p>
+                    </div>
+
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => { setEditingItem(t); setIsCreating(false); }}
+                        className="p-1.5 rounded hover:bg-muted text-brand-navy transition-colors"
+                        title="Edit Endorsement"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => setDeleteTargetItem(t)}
+                        className="p-1.5 rounded hover:bg-red-50 text-red-600 transition-colors"
+                        title="Delete Endorsement"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
-      {/* Reusable Confirm Modal */}
+      {/* Delete Confirmation Modal with Named Endorser */}
       <ConfirmModal
-        isOpen={!!deleteTargetId}
+        isOpen={!!deleteTargetItem}
         title="Delete Testimonial"
-        message="Are you sure you want to delete this student endorsement? This cannot be undone."
+        message={`Are you sure you want to delete the student endorsement by "${deleteTargetItem?.name}"? This cannot be undone.`}
         confirmText="Delete Endorsement"
         isDestructive={true}
         isLoading={deleting}
         onConfirm={confirmDelete}
-        onCancel={() => setDeleteTargetId(null)}
+        onCancel={() => setDeleteTargetItem(null)}
       />
     </div>
   );
 };
-

@@ -25,7 +25,7 @@
     "ga_id": "",
     "meta_pixel_id": "",
     "domain": "upsa-src-wc.org",
-    "updated_at": "2026-09-08T09:50:53.989Z"
+    "updated_at": "2026-09-14T12:08:13.040Z"
   },
   "visionContent": {
     "id": "primary",
@@ -708,6 +708,33 @@
       "status": "draft",
       "id": "tst-1788861058455",
       "created_at": "2026-09-08T09:50:58.455Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1789387367633",
+      "created_at": "2026-09-14T12:02:47.633Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1789387407265",
+      "created_at": "2026-09-14T12:03:27.265Z"
+    },
+    {
+      "name": "Student Supporter",
+      "programme_role": "Level 200 Admin",
+      "statement": "Great advocate for our campus.",
+      "consent_confirmed": true,
+      "status": "published",
+      "id": "tst-1789387693013",
+      "created_at": "2026-09-14T12:08:13.013Z"
     }
   ],
   "faqItems": [
@@ -919,6 +946,33 @@
       "sort_order": 1,
       "id": "med-1788860347111",
       "created_at": "2026-09-08T09:39:07.111Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1789387367697",
+      "created_at": "2026-09-14T12:02:47.697Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1789387407309",
+      "created_at": "2026-09-14T12:03:27.309Z"
+    },
+    {
+      "media_type": "photo",
+      "url": "https://cloudinary.com/sample.jpg",
+      "caption": "Candidate speaking at Town Hall",
+      "alt_text": "Candidate addressing female students at the LBC auditorium",
+      "sort_order": 1,
+      "id": "med-1789387693044",
+      "created_at": "2026-09-14T12:08:13.044Z"
     }
   ],
   "policyItems": [
@@ -1114,6 +1168,39 @@
       "id": "pol-1788860347107",
       "created_at": "2026-09-08T09:39:07.107Z",
       "updated_at": "2026-09-08T09:39:07.107Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1789387367684",
+      "created_at": "2026-09-14T12:02:47.684Z",
+      "updated_at": "2026-09-14T12:02:47.684Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1789387407300",
+      "created_at": "2026-09-14T12:03:27.300Z",
+      "updated_at": "2026-09-14T12:03:27.300Z"
+    },
+    {
+      "title": "Revealed Policy Platform Item",
+      "summary": "Now allowed after launch reveal",
+      "issue_statement": "Documented transit issue",
+      "solution": "Campus shuttle extension",
+      "why_it_matters": "Student safety",
+      "status": "published",
+      "id": "pol-1789387693036",
+      "created_at": "2026-09-14T12:08:13.036Z",
+      "updated_at": "2026-09-14T12:08:13.036Z"
     }
   ],
   "contactSubmissions": [

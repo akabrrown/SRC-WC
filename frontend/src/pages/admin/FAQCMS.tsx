@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { HelpCircle, Plus, Save, Trash2, Edit2, ChevronDown, CheckCircle2, AlertCircle } from 'lucide-react';
+import { HelpCircle, Plus, Save, Trash2, Edit2, Search } from 'lucide-react';
 import { api } from '../../api/client.js';
 import { FAQItem, FAQCategory, ContentStatus } from '../../types/index.js';
-import { LoadingState } from '../../components/StateView.js';
+import { LoadingState, ErrorState, EmptyState } from '../../components/StateView.js';
 import { useToast } from '../../context/ToastContext.js';
 import { ConfirmModal } from '../../components/ConfirmModal.js';
 
@@ -16,29 +16,31 @@ const CATEGORIES: FAQCategory[] = [
   'How to Contact the Candidate'
 ];
 
-
-
 export const FAQCMS: React.FC = () => {
   const toast = useToast();
   const [items, setItems] = useState<FAQItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [editingItem, setEditingItem] = useState<Partial<FAQItem> | null>(null);
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [saving, setSaving] = useState<boolean>(false);
-  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
+  const [deleteTargetItem, setDeleteTargetItem] = useState<FAQItem | null>(null);
   const [deleting, setDeleting] = useState<boolean>(false);
 
   useEffect(() => {
+    document.title = 'FAQ & Knowledge Base CMS | Campaign Staff Portal';
     fetchFAQ();
   }, []);
 
   const fetchFAQ = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await api.getAllFAQAdmin();
       setItems(data);
     } catch (err: any) {
-      toast.error('Fetch Failed', err.message || 'Failed to load FAQ items.');
+      setError(err.message || 'Failed to load FAQ items.');
     } finally {
       setLoading(false);
     }
@@ -57,21 +59,23 @@ export const FAQCMS: React.FC = () => {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editingItem || !editingItem.question || !editingItem.answer) {
+    if (!editingItem) return;
+
+    if (!editingItem.question?.trim() || !editingItem.answer?.trim()) {
       toast.error('Validation Error', 'Question and answer are required.');
       return;
     }
-    setSaving(true);
 
+    setSaving(true);
     try {
       if (isCreating) {
         const created = await api.createFAQ(editingItem);
         setItems([...items, created]);
-        toast.success('Question Created', 'New Q&A added to FAQ.');
+        toast.success('Question Created', 'New Q&A added to FAQ knowledge base.');
       } else if (editingItem.id) {
         const updated = await api.updateFAQ(editingItem.id, editingItem);
         setItems(items.map(i => i.id === updated.id ? updated : i));
-        toast.success('Question Saved', 'FAQ item updated.');
+        toast.success('Question Saved', 'FAQ item updated successfully.');
       }
       setEditingItem(null);
       setIsCreating(false);
@@ -83,24 +87,43 @@ export const FAQCMS: React.FC = () => {
   };
 
   const confirmDelete = async () => {
-    if (!deleteTargetId) return;
+    if (!deleteTargetItem) return;
     setDeleting(true);
     try {
-      await api.deleteFAQ(deleteTargetId);
-      setItems(items.filter(i => i.id !== deleteTargetId));
-      toast.success('Question Removed', 'FAQ item deleted.');
-      setDeleteTargetId(null);
+      await api.deleteFAQ(deleteTargetItem.id);
+      setItems(items.filter(i => i.id !== deleteTargetItem.id));
+      toast.success('Question Removed', `"${deleteTargetItem.question}" removed from FAQ.`);
+      setDeleteTargetItem(null);
     } catch (err: any) {
-      toast.error('Delete Failed', err.message || 'Failed to delete.');
+      toast.error('Delete Failed', err.message || 'Failed to delete FAQ question.');
     } finally {
       setDeleting(false);
     }
   };
 
-
   if (loading) {
     return <LoadingState message="Loading FAQ knowledge base..." />;
   }
+
+  if (error) {
+    return (
+      <ErrorState
+        title="Failed to Load FAQ"
+        message={error}
+        onRetry={fetchFAQ}
+      />
+    );
+  }
+
+  const filteredItems = items.filter((item) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      item.question.toLowerCase().includes(q) ||
+      item.answer.toLowerCase().includes(q) ||
+      item.category.toLowerCase().includes(q)
+    );
+  });
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-20">
@@ -121,7 +144,7 @@ export const FAQCMS: React.FC = () => {
         {!editingItem && (
           <button
             onClick={() => handleCreateForCategory(CATEGORIES[0])}
-            className="btn-gold text-xs font-bold py-2.5 px-5 gap-2 shadow-sm"
+            className="btn-gold text-xs font-bold py-2.5 px-5 gap-2 shadow-sm flex items-center"
           >
             <Plus className="w-4 h-4" />
             <span>Add Question</span>
@@ -131,7 +154,6 @@ export const FAQCMS: React.FC = () => {
 
       {editingItem ? (
         <form onSubmit={handleSave} className="campaign-card space-y-4">
-
           <div className="flex items-center justify-between border-b border-border pb-3">
             <h2 className="text-base font-bold text-brand-navy">
               {isCreating ? 'Add New Question' : 'Edit Question & Answer'}
@@ -139,7 +161,7 @@ export const FAQCMS: React.FC = () => {
             <button
               type="button"
               onClick={() => { setEditingItem(null); setIsCreating(false); }}
-              className="text-xs text-ink/60 font-semibold"
+              className="text-xs text-ink/60 font-semibold hover:text-ink transition-colors"
             >
               Cancel
             </button>
@@ -201,14 +223,15 @@ export const FAQCMS: React.FC = () => {
             <button
               type="button"
               onClick={() => { setEditingItem(null); setIsCreating(false); }}
-              className="px-3 py-1.5 text-xs text-ink/60"
+              disabled={saving}
+              className="px-3 py-1.5 text-xs text-ink/60 hover:text-ink transition-colors font-semibold"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="btn-gold text-xs font-bold py-2 px-5 gap-2"
+              className="btn-gold text-xs font-bold py-2 px-5 gap-2 flex items-center"
             >
               <Save className="w-3.5 h-3.5" />
               <span>{saving ? 'Saving...' : 'Save Question'}</span>
@@ -217,8 +240,23 @@ export const FAQCMS: React.FC = () => {
         </form>
       ) : (
         <div className="space-y-6">
+          {/* Search Bar */}
+          <div className="p-3.5 rounded-xl bg-surface border border-border flex items-center gap-3">
+            <div className="relative flex-1">
+              <Search className="w-4 h-4 absolute left-3 top-2.5 text-ink/40" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search FAQ questions and answers..."
+                className="w-full pl-9 pr-3 py-1.5 rounded-lg border border-border text-xs focus:border-brand-gold bg-white"
+              />
+            </div>
+          </div>
+
           {CATEGORIES.map((cat) => {
-            const catItems = items.filter(i => i.category === cat);
+            const catItems = filteredItems.filter(i => i.category === cat);
+            if (searchQuery.trim() && catItems.length === 0) return null;
             return (
               <div key={cat} className="campaign-card">
                 <div className="flex items-center justify-between border-b border-border pb-3 mb-3">
@@ -227,7 +265,7 @@ export const FAQCMS: React.FC = () => {
                   </h3>
                   <button
                     onClick={() => handleCreateForCategory(cat)}
-                    className="text-xs font-bold text-brand-navy hover:text-brand-gold flex items-center gap-1"
+                    className="text-xs font-bold text-brand-navy hover:text-brand-gold flex items-center gap-1 transition-colors"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Add</span>
@@ -235,7 +273,7 @@ export const FAQCMS: React.FC = () => {
                 </div>
 
                 {catItems.length === 0 ? (
-                  <p className="text-xs text-ink/40 py-2">No Q&As added for this category yet.</p>
+                  <p className="text-xs text-ink/40 py-2">No questions added for this category yet.</p>
                 ) : (
                   <div className="divide-y divide-border">
                     {catItems.map((item) => (
@@ -251,14 +289,14 @@ export const FAQCMS: React.FC = () => {
                         <div className="flex items-center gap-1.5 flex-shrink-0">
                           <button
                             onClick={() => { setEditingItem(item); setIsCreating(false); }}
-                            className="p-1.5 rounded hover:bg-muted text-brand-navy"
+                            className="p-1.5 rounded hover:bg-muted text-brand-navy transition-colors"
                             title="Edit"
                           >
                             <Edit2 className="w-3.5 h-3.5" />
                           </button>
                           <button
-                            onClick={() => setDeleteTargetId(item.id)}
-                            className="p-1.5 rounded hover:bg-red-50 text-red-600"
+                            onClick={() => setDeleteTargetItem(item)}
+                            className="p-1.5 rounded hover:bg-red-50 text-red-600 transition-colors"
                             title="Delete"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -274,18 +312,17 @@ export const FAQCMS: React.FC = () => {
         </div>
       )}
 
-      {/* Reusable Confirm Modal */}
+      {/* Delete Confirm Modal with Specific Question */}
       <ConfirmModal
-        isOpen={!!deleteTargetId}
+        isOpen={!!deleteTargetItem}
         title="Delete FAQ Question"
-        message="Are you sure you want to remove this question from the knowledge base?"
+        message={`Are you sure you want to remove the question "${deleteTargetItem?.question}" from the knowledge base?`}
         confirmText="Delete Question"
         isDestructive={true}
         isLoading={deleting}
         onConfirm={confirmDelete}
-        onCancel={() => setDeleteTargetId(null)}
+        onCancel={() => setDeleteTargetItem(null)}
       />
     </div>
   );
 };
-

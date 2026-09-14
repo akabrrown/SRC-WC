@@ -4,19 +4,13 @@ import {
   Inbox,
   MessageSquare,
   CheckCircle2,
-  Settings,
-  Newspaper,
   Calendar,
-  Users,
-  Shield,
   ArrowRight,
-  Sparkles,
-  ToggleRight,
-  BookOpen
+  Sparkles
 } from 'lucide-react';
 import { api } from '../../api/client.js';
 import { SiteSettings, CampaignUpdate, ContactSubmission, StudentVoiceSubmission, Testimonial } from '../../types/index.js';
-import { LoadingState } from '../../components/StateView.js';
+import { LoadingState, ErrorState } from '../../components/StateView.js';
 
 export const Dashboard: React.FC = () => {
   const [settings, setSettings] = useState<SiteSettings | null>(null);
@@ -25,13 +19,16 @@ export const Dashboard: React.FC = () => {
   const [voiceSubs, setVoiceSubs] = useState<StudentVoiceSubmission[]>([]);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    document.title = 'Campaign CMS Control Centre | Staff Portal';
     fetchDashboardData();
   }, []);
 
   const fetchDashboardData = async () => {
     setLoading(true);
+    setError(null);
     try {
       const [sett, upds, cnts, vce, tst] = await Promise.all([
         api.getSiteSettings(),
@@ -45,15 +42,25 @@ export const Dashboard: React.FC = () => {
       setContacts(cnts);
       setVoiceSubs(vce);
       setTestimonials(tst);
-    } catch (err) {
-      console.error('Failed to load admin stats', err);
+    } catch (err: any) {
+      setError(err.message || 'Failed to load campaign statistics and dashboard feeds.');
     } finally {
       setLoading(false);
     }
   };
 
   if (loading) {
-    return <LoadingState message="Loading dashboard intelligence..." />;
+    return <LoadingState message="Loading dashboard intelligence and campaign metrics..." />;
+  }
+
+  if (error) {
+    return (
+      <ErrorState
+        title="Failed to Load Dashboard"
+        message={error}
+        onRetry={fetchDashboardData}
+      />
+    );
   }
 
   const unreadContacts = contacts.filter((c) => c.status === 'new').length;
@@ -63,7 +70,7 @@ export const Dashboard: React.FC = () => {
   const totalPending = pendingUpdates + pendingTestimonials;
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
+    <div className="space-y-8 max-w-7xl mx-auto pb-20">
       {/* Launch Phase Banner */}
       <div className={`p-6 rounded-2xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm ${
         settings?.agenda_teaser_mode

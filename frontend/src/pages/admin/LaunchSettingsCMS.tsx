@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Settings, Save, CheckCircle2, AlertCircle, ToggleLeft, ToggleRight, Sparkles, Calendar, Video, ShieldCheck } from 'lucide-react';
+import { Settings, Save, Calendar, Video } from 'lucide-react';
 import { api } from '../../api/client.js';
 import { SiteSettings } from '../../types/index.js';
-import { LoadingState } from '../../components/StateView.js';
+import { LoadingState, ErrorState } from '../../components/StateView.js';
+import { useToast } from '../../context/ToastContext.js';
 
 export const LaunchSettingsCMS: React.FC = () => {
+  const toast = useToast();
   const [settings, setSettings] = useState<SiteSettings | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [saving, setSaving] = useState<boolean>(false);
-  const [savedSuccess, setSavedSuccess] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [saving, setSaving] = useState<boolean>(false);
 
   useEffect(() => {
+    document.title = 'Launch Phase & Settings CMS | Campaign Staff Portal';
     fetchSettings();
   }, []);
 
   const fetchSettings = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await api.getSiteSettings();
       setSettings(data);
@@ -30,17 +33,18 @@ export const LaunchSettingsCMS: React.FC = () => {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!settings) return;
-    setSaving(true);
-    setError(null);
-    setSavedSuccess(false);
 
+    setSaving(true);
     try {
-      const updated = await api.updateSiteSettings(settings);
+      const updated = await api.updateSiteSettings({
+        ...settings,
+        teaser_video_url: settings.teaser_video_url?.trim() || '',
+        election_date: settings.election_date?.trim() || ''
+      });
       setSettings(updated);
-      setSavedSuccess(true);
-      setTimeout(() => setSavedSuccess(false), 3000);
+      toast.success('Settings Saved', 'Launch phase and operational settings updated live.');
     } catch (err: any) {
-      setError(err.message || 'Save failed.');
+      toast.error('Save Failed', err.message || 'Failed to save settings.');
     } finally {
       setSaving(false);
     }
@@ -50,11 +54,13 @@ export const LaunchSettingsCMS: React.FC = () => {
     return <LoadingState message="Loading launch-phase settings..." />;
   }
 
-  if (!settings) {
+  if (error || !settings) {
     return (
-      <div className="p-8 text-center">
-        <p className="text-sm text-red-600">Failed to load launch settings.</p>
-      </div>
+      <ErrorState
+        title="Failed to Load Settings"
+        message={error || 'Could not retrieve campaign settings.'}
+        onRetry={fetchSettings}
+      />
     );
   }
 
@@ -73,21 +79,7 @@ export const LaunchSettingsCMS: React.FC = () => {
             Switch between Campaign Teaser Mode and Full Policy Reveal without code redeployment.
           </p>
         </div>
-
-        {savedSuccess && (
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-bold animate-in fade-in duration-200">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-            <span>Settings Applied Live</span>
-          </div>
-        )}
       </div>
-
-      {error && (
-        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 flex-shrink-0 text-red-600" />
-          <span>{error}</span>
-        </div>
-      )}
 
       <form onSubmit={handleSave} className="space-y-8">
         {/* Phase Toggle 1: Agenda Teaser Mode */}
@@ -105,7 +97,7 @@ export const LaunchSettingsCMS: React.FC = () => {
                 </span>
               </div>
               <p className="text-xs text-ink/70 max-w-xl leading-relaxed">
-                When enabled, the public <code>/our-agenda</code> page displays the first-class Teaser template and survey CTAs. When disabled, the full 5-pillar Policy Hub unlocks automatically.
+                When enabled, the public <code>/our-agenda</code> page displays the high-impact teaser template and student survey CTA. When disabled, the full policy platform unlocks automatically.
               </p>
             </div>
 
@@ -127,7 +119,7 @@ export const LaunchSettingsCMS: React.FC = () => {
 
           <div className="p-4 rounded-xl bg-muted/30 text-xs text-ink/75 leading-relaxed space-y-1">
             <p><strong>Teaser Mode Active:</strong> Public sees video placeholder, "Coming Soon" badge, and Needs Survey button.</p>
-            <p><strong>Teaser Mode Inactive:</strong> Public sees full policy platform with Issue, Solution, Implementation, and Resources.</p>
+            <p><strong>Teaser Mode Inactive:</strong> Public sees full policy platform with Challenge, Solution, and Implementation Roadmaps.</p>
           </div>
         </div>
 
@@ -183,7 +175,7 @@ export const LaunchSettingsCMS: React.FC = () => {
                 type="text"
                 value={settings.teaser_video_url || ''}
                 onChange={(e) => setSettings({ ...settings, teaser_video_url: e.target.value })}
-                placeholder="https://www.youtube.com/embed/... or mp4 link"
+                placeholder="https://www.youtube.com/embed/... or direct video link"
                 className="w-full px-3.5 py-2.5 rounded-lg border border-border text-sm focus:border-brand-gold bg-white"
               />
               <p className="text-[11px] text-ink/50 mt-1">
@@ -218,7 +210,7 @@ export const LaunchSettingsCMS: React.FC = () => {
           <button
             type="submit"
             disabled={saving}
-            className="btn-gold text-xs font-bold py-2.5 px-6 gap-2"
+            className="btn-gold text-xs font-bold py-2.5 px-6 gap-2 flex items-center"
           >
             <Save className="w-3.5 h-3.5" />
             <span>{saving ? 'Saving...' : 'Save Launch Settings'}</span>

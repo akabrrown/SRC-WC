@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Image as ImageIcon, Plus, Trash2, Save, Upload, Cloud, X } from 'lucide-react';
 import { api } from '../../api/client.js';
 import { MediaItem } from '../../types/index.js';
-import { LoadingState } from '../../components/StateView.js';
+import { LoadingState, ErrorState, EmptyState } from '../../components/StateView.js';
 import { useToast } from '../../context/ToastContext.js';
 import { ConfirmModal } from '../../components/ConfirmModal.js';
 import { uploadToCloudinary } from '../../utils/cloudinary.js';
@@ -12,6 +12,7 @@ export const MediaGalleryCMS: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -22,20 +23,22 @@ export const MediaGalleryCMS: React.FC = () => {
     alt_text: ''
   });
   const [isAdding, setIsAdding] = useState<boolean>(false);
-  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
+  const [deleteTargetMedia, setDeleteTargetMedia] = useState<MediaItem | null>(null);
   const [deleting, setDeleting] = useState<boolean>(false);
 
   useEffect(() => {
+    document.title = 'Media Gallery CMS | Campaign Staff Portal';
     fetchMedia();
   }, []);
 
   const fetchMedia = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await api.getMedia();
       setMedia(data);
     } catch (err: any) {
-      toast.error('Fetch Failed', err.message || 'Failed to load media.');
+      setError(err.message || 'Failed to load media items.');
     } finally {
       setLoading(false);
     }
@@ -74,7 +77,6 @@ export const MediaGalleryCMS: React.FC = () => {
     try {
       let finalUrl = newItem.url.trim();
 
-      // If a local file was selected, upload it directly to Cloudinary
       if (selectedFile) {
         finalUrl = await uploadToCloudinary(selectedFile, (progress) => {
           setUploadProgress(progress);
@@ -104,15 +106,15 @@ export const MediaGalleryCMS: React.FC = () => {
   };
 
   const confirmDelete = async () => {
-    if (!deleteTargetId) return;
+    if (!deleteTargetMedia) return;
     setDeleting(true);
     try {
-      await api.deleteMedia(deleteTargetId);
-      setMedia(media.filter(m => m.id !== deleteTargetId));
-      toast.success('Media Deleted', 'Photo has been removed from gallery.');
-      setDeleteTargetId(null);
+      await api.deleteMedia(deleteTargetMedia.id);
+      setMedia(media.filter(m => m.id !== deleteTargetMedia.id));
+      toast.success('Media Deleted', `Photo "${deleteTargetMedia.caption || deleteTargetMedia.alt_text}" removed from gallery.`);
+      setDeleteTargetMedia(null);
     } catch (err: any) {
-      toast.error('Delete Failed', err.message || 'Failed to delete.');
+      toast.error('Delete Failed', err.message || 'Failed to delete photo.');
     } finally {
       setDeleting(false);
     }
@@ -120,6 +122,16 @@ export const MediaGalleryCMS: React.FC = () => {
 
   if (loading) {
     return <LoadingState message="Loading media gallery..." />;
+  }
+
+  if (error) {
+    return (
+      <ErrorState
+        title="Failed to Load Media"
+        message={error}
+        onRetry={fetchMedia}
+      />
+    );
   }
 
   return (
@@ -141,7 +153,7 @@ export const MediaGalleryCMS: React.FC = () => {
         {!isAdding && (
           <button
             onClick={() => setIsAdding(true)}
-            className="btn-gold text-xs font-bold py-2.5 px-5 gap-2 shadow-sm"
+            className="btn-gold text-xs font-bold py-2.5 px-5 gap-2 shadow-sm flex items-center"
           >
             <Plus className="w-4 h-4" />
             <span>Upload Photo</span>
@@ -230,7 +242,7 @@ export const MediaGalleryCMS: React.FC = () => {
                     setSelectedFile(null);
                   }
                 }}
-                placeholder="https://res.cloudinary.com/rymbfj8c/image/upload/..."
+                placeholder="https://res.cloudinary.com/.../image/upload/..."
                 className="w-full px-3 py-2 rounded border border-border text-xs focus:border-brand-gold bg-white"
               />
             </div>
@@ -250,7 +262,7 @@ export const MediaGalleryCMS: React.FC = () => {
 
             <div className="sm:col-span-2">
               <label className="block text-xs font-bold text-ink mb-1 flex items-center gap-1.5">
-                <span>Accessibility Alt-Text (Mandatory per Spec §7.1)</span>
+                <span>Accessibility Alt-Text (Mandatory per WCAG Standards)</span>
                 <span className="text-red-500">*</span>
               </label>
               <input
@@ -287,14 +299,15 @@ export const MediaGalleryCMS: React.FC = () => {
                 setSelectedFile(null);
                 setPreviewUrl('');
               }}
-              className="px-4 py-2 text-xs text-ink/60 hover:text-ink"
+              disabled={uploading}
+              className="px-4 py-2 text-xs text-ink/60 hover:text-ink transition-colors font-semibold"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={uploading}
-              className="btn-gold text-xs font-bold py-2 px-6 gap-2 shadow-sm"
+              className="btn-gold text-xs font-bold py-2 px-6 gap-2 shadow-sm flex items-center"
             >
               <Save className="w-3.5 h-3.5" />
               <span>{uploading ? 'Uploading...' : 'Save to Gallery'}</span>
@@ -304,46 +317,55 @@ export const MediaGalleryCMS: React.FC = () => {
       )}
 
       {/* Media Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {media.map((item) => (
-          <div key={item.id} className="campaign-card !p-0 overflow-hidden group relative">
-            <div className="w-full h-48 bg-brand-navyDark relative overflow-hidden flex items-center justify-center">
-              <img
-                src={item.url}
-                alt={item.alt_text}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                loading="lazy"
-              />
-              <button
-                onClick={() => setDeleteTargetId(item.id)}
-                className="absolute top-2 right-2 p-1.5 rounded-lg bg-brand-navyDark/80 text-white hover:bg-red-600 transition-colors opacity-0 group-hover:opacity-100"
-                title="Delete image"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
+      {media.length === 0 ? (
+        <EmptyState
+          title="No Photos in Gallery"
+          message="Upload campaign photos to populate the public media gallery."
+          actionText="Upload Photo"
+          onAction={() => setIsAdding(true)}
+        />
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {media.map((item) => (
+            <div key={item.id} className="campaign-card !p-0 overflow-hidden group relative">
+              <div className="w-full h-48 bg-brand-navyDark relative overflow-hidden flex items-center justify-center">
+                <img
+                  src={item.url}
+                  alt={item.alt_text}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                  loading="lazy"
+                />
+                <button
+                  onClick={() => setDeleteTargetMedia(item)}
+                  className="absolute top-2 right-2 p-1.5 rounded-lg bg-brand-navyDark/80 text-white hover:bg-red-600 transition-colors opacity-0 group-hover:opacity-100"
+                  title="Delete image"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="p-3">
+                <span className="text-xs font-bold text-brand-navy block truncate">
+                  {item.caption || 'Campaign Photo'}
+                </span>
+                <span className="text-[10px] text-ink/50 block truncate mt-0.5" title={item.alt_text}>
+                  Alt: {item.alt_text}
+                </span>
+              </div>
             </div>
-            <div className="p-3">
-              <span className="text-xs font-bold text-brand-navy block truncate">
-                {item.caption || 'Campaign Photo'}
-              </span>
-              <span className="text-[10px] text-ink/50 block truncate mt-0.5" title={item.alt_text}>
-                Alt: {item.alt_text}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
-      {/* Reusable Confirm Modal */}
+      {/* Reusable Confirm Modal with Named Item */}
       <ConfirmModal
-        isOpen={!!deleteTargetId}
+        isOpen={!!deleteTargetMedia}
         title="Delete Photo"
-        message="Are you sure you want to delete this photo from the media gallery? This cannot be undone."
+        message={`Are you sure you want to delete the photo "${deleteTargetMedia?.caption || deleteTargetMedia?.alt_text || 'selected photo'}" from the media gallery? This cannot be undone.`}
         confirmText="Delete Photo"
         isDestructive={true}
         isLoading={deleting}
         onConfirm={confirmDelete}
-        onCancel={() => setDeleteTargetId(null)}
+        onCancel={() => setDeleteTargetMedia(null)}
       />
     </div>
   );

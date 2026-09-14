@@ -59,6 +59,22 @@ router.put(
   }
 );
 
+// Admin: Delete survey link
+router.delete(
+  '/surveys/:id',
+  authenticateAdmin,
+  requirePermissionScope('manage_voice'),
+  logAdminAction('DELETE_SURVEY_LINK', 'SurveyLink'),
+  (req: AuthenticatedRequest, res: Response) => {
+    const id = getParam(req);
+    const success = db.deleteSurveyLink(id);
+    if (!success) {
+      return res.status(404).json({ title: 'Not Found', detail: 'Survey link not found.' });
+    }
+    res.json({ message: 'Survey link deleted successfully.' });
+  }
+);
+
 // Public: Submit student voice (concern or idea)
 router.post(
   '/submissions',

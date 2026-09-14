@@ -364,7 +364,9 @@ class ApiClient {
 
   // Policies Admin
   async getAllPoliciesAdmin(): Promise<PolicyItem[]> {
-    return this.request<PolicyItem[]>('/policies/admin/all');
+    const res = await this.request<{ isTeaserMode?: boolean; policies?: PolicyItem[] } | PolicyItem[]>('/policies/admin/all');
+    if (Array.isArray(res)) return res;
+    return res.policies || [];
   }
 
   async createPolicy(policyPayload: Partial<PolicyItem>): Promise<PolicyItem> {
@@ -381,6 +383,38 @@ class ApiClient {
     });
   }
 
+  async deletePolicy(id: string): Promise<void> {
+    return this.request(`/policies/${id}`, { method: 'DELETE' });
+  }
+
+  // Survey links delete
+  async deleteSurveyLink(id: string): Promise<void> {
+    return this.request(`/voice/surveys/${id}`, { method: 'DELETE' });
+  }
+
+  // Identity Channels & Values
+  async updateContactChannels(channelsPayload: Partial<ContactChannels>): Promise<ContactChannels> {
+    return this.request<ContactChannels>('/identity/channels', {
+      method: 'PUT',
+      body: JSON.stringify(channelsPayload)
+    });
+  }
+
+  async updateValues(values: CampaignValue[]): Promise<CampaignValue[]> {
+    return this.request<CampaignValue[]>('/identity/values', {
+      method: 'PUT',
+      body: JSON.stringify({ values })
+    });
+  }
+
+  // Women's Corner
+  async updateWomensCornerSection(id: string, sectionPayload: Partial<WomensCornerSection>): Promise<WomensCornerSection> {
+    return this.request<WomensCornerSection>(`/womens-corner/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(sectionPayload)
+    });
+  }
+
   // Admin Users & Audit Logs
   async getAdminUsers(): Promise<AdminUser[]> {
     return this.request<AdminUser[]>('/admin/users');
@@ -391,6 +425,17 @@ class ApiClient {
       method: 'POST',
       body: JSON.stringify(userPayload)
     });
+  }
+
+  async updateAdminUser(id: string, userPayload: Partial<AdminUser>): Promise<AdminUser> {
+    return this.request<AdminUser>(`/admin/users/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(userPayload)
+    });
+  }
+
+  async deleteAdminUser(id: string): Promise<void> {
+    return this.request(`/admin/users/${id}`, { method: 'DELETE' });
   }
 
   async getAuditLogs(): Promise<AuditLogEntry[]> {

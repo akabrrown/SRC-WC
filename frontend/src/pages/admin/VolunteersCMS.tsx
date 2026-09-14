@@ -1,20 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Users, Download, Eye, CheckCircle2, Phone, Mail, BookOpen, Clock } from 'lucide-react';
+import { Users, Download, Eye, Search } from 'lucide-react';
 import { api } from '../../api/client.js';
 import { VolunteerRegistration, RegistrationType } from '../../types/index.js';
-import { LoadingState } from '../../components/StateView.js';
+import { LoadingState, ErrorState, EmptyState } from '../../components/StateView.js';
 import { useToast } from '../../context/ToastContext.js';
+
+const PAGE_SIZE = 12;
 
 export const VolunteersCMS: React.FC = () => {
   const toast = useToast();
   const [volunteers, setVolunteers] = useState<VolunteerRegistration[]>([]);
   const [typeFilter, setTypeFilter] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedVolunteer, setSelectedVolunteer] = useState<VolunteerRegistration | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    document.title = 'Volunteers & Mobilisation CMS | Campaign Staff Portal';
     fetchVolunteers();
   }, []);
 
@@ -52,11 +58,12 @@ export const VolunteersCMS: React.FC = () => {
 
   const fetchVolunteers = async () => {
     setLoading(true);
+    setError(null);
     try {
       const volunteerList = await api.getVolunteers();
       setVolunteers(volunteerList);
-    } catch (err) {
-      console.error('Failed to load volunteer records', err);
+    } catch (err: any) {
+      setError(err.message || 'Failed to load volunteer records.');
     } finally {
       setLoading(false);
     }
@@ -110,12 +117,33 @@ export const VolunteersCMS: React.FC = () => {
     toast.success('CSV Exported', `Successfully exported ${volunteers.length} volunteer records.`);
   };
 
-
-  const filtered = volunteers.filter(v => typeFilter === 'all' || v.registration_type === typeFilter);
-
   if (loading) {
     return <LoadingState message="Loading volunteer mobilisation database..." />;
   }
+
+  if (error) {
+    return (
+      <ErrorState
+        title="Failed to Load Volunteers"
+        message={error}
+        onRetry={fetchVolunteers}
+      />
+    );
+  }
+
+  const filtered = volunteers.filter((v) => {
+    const matchesType = typeFilter === 'all' || v.registration_type === typeFilter;
+    const matchesSearch =
+      searchQuery.trim() === '' ||
+      v.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      v.phone.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      v.programme.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      v.area_of_interest.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesType && matchesSearch;
+  });
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const paginatedVolunteers = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   const getTypeBadge = (type: RegistrationType) => {
     switch (type) {
@@ -148,7 +176,7 @@ export const VolunteersCMS: React.FC = () => {
 
         <button
           onClick={handleExportCSV}
-          className="btn-gold text-xs font-bold py-2.5 px-5 gap-2 shadow-sm"
+          className="btn-gold text-xs font-bold py-2.5 px-5 gap-2 shadow-sm flex items-center"
         >
           <Download className="w-4 h-4" />
           <span>Export CSV for Mobilisation</span>
@@ -159,11 +187,28 @@ export const VolunteersCMS: React.FC = () => {
       <div className="campaign-card !p-0 overflow-hidden">
         {/* Filter Bar */}
         <div className="p-4 border-b border-border bg-muted/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="relative w-full sm:w-72">
+            <Search className="w-4 h-4 absolute left-3 top-2.5 text-ink/40" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setCurrentPage(1);
+              }}
+              placeholder="Search by name, phone, programme..."
+              className="w-full pl-9 pr-3 py-1.5 rounded-lg border border-border text-xs focus:border-brand-gold bg-white"
+            />
+          </div>
+
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-ink/70">Role Category:</span>
             <select
               value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value)}
+              onChange={(e) => {
+                setTypeFilter(e.target.value);
+                setCurrentPage(1);
+              }}
               className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-border bg-white"
             >
               <option value="all">All Registrations ({volunteers.length})</option>
@@ -173,10 +218,6 @@ export const VolunteersCMS: React.FC = () => {
               <option value="supporter">Supporters</option>
             </select>
           </div>
-
-          <span className="text-xs font-medium text-ink/50">
-            Showing {filtered.length} of {volunteers.length} registered
-          </span>
         </div>
 
         <div className="overflow-x-auto">
@@ -193,14 +234,14 @@ export const VolunteersCMS: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {filtered.length === 0 ? (
+              {paginatedVolunteers.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="text-center py-8 text-ink/50">
                     No registrations found matching this filter.
                   </td>
                 </tr>
               ) : (
-                filtered.map((volunteer) => (
+                paginatedVolunteers.map((volunteer) => (
                   <tr key={volunteer.id} className="hover:bg-muted/20 transition-colors">
                     <td className="py-3 px-4 font-bold text-brand-navy">
                       {volunteer.full_name}
@@ -224,7 +265,7 @@ export const VolunteersCMS: React.FC = () => {
                     <td className="py-3 px-4 text-right">
                       <button
                         onClick={() => setSelectedVolunteer(volunteer)}
-                        className="p-1.5 rounded hover:bg-muted text-brand-navy"
+                        className="p-1.5 rounded hover:bg-muted text-brand-navy transition-colors"
                         title="View Full Details"
                       >
                         <Eye className="w-4 h-4" />
@@ -236,9 +277,34 @@ export const VolunteersCMS: React.FC = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Pagination Bar */}
+        {totalPages > 1 && (
+          <div className="p-4 border-t border-border bg-muted/10 flex items-center justify-between text-xs">
+            <span className="text-ink/60">
+              Showing page {currentPage} of {totalPages} ({filtered.length} total)
+            </span>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="px-3 py-1 rounded border border-border bg-white text-ink/70 hover:text-ink disabled:opacity-40"
+              >
+                Previous
+              </button>
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 rounded border border-border bg-white text-ink/70 hover:text-ink disabled:opacity-40"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Details Modal */}
+      {/* Details Modal with Focus Trap & Escape Listener */}
       {selectedVolunteer && (
         <div
           role="dialog"

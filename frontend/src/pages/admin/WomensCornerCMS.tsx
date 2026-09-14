@@ -1,28 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Save, CheckCircle2, AlertCircle, Edit2 } from 'lucide-react';
+import { Heart, Save, Edit2 } from 'lucide-react';
 import { api } from '../../api/client.js';
 import { WomensCornerSection } from '../../types/index.js';
-import { LoadingState } from '../../components/StateView.js';
+import { LoadingState, ErrorState, EmptyState } from '../../components/StateView.js';
+import { useToast } from '../../context/ToastContext.js';
 
 export const WomensCornerCMS: React.FC = () => {
+  const toast = useToast();
   const [sections, setSections] = useState<WomensCornerSection[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [editingSection, setEditingSection] = useState<WomensCornerSection | null>(null);
   const [saving, setSaving] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   useEffect(() => {
+    document.title = "Women's Corner CMS | Campaign Staff Portal";
     fetchSections();
   }, []);
 
   const fetchSections = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await api.getWomensCornerSections();
       setSections(data);
     } catch (err: any) {
-      setError(err.message || 'Failed to load sections.');
+      setError(err.message || "Failed to load Women's Corner sections.");
     } finally {
       setLoading(false);
     }
@@ -31,24 +34,41 @@ export const WomensCornerCMS: React.FC = () => {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingSection) return;
-    setSaving(true);
-    setError(null);
 
+    if (!editingSection.title.trim() || !editingSection.body.trim()) {
+      toast.error('Validation Error', 'Section title and body content are required.');
+      return;
+    }
+
+    setSaving(true);
     try {
-      // In the mock/database, sections can be updated
-      setSections(sections.map(s => s.id === editingSection.id ? editingSection : s));
+      const updated = await api.updateWomensCornerSection(editingSection.id, {
+        title: editingSection.title.trim(),
+        body: editingSection.body.trim(),
+        icon: editingSection.icon?.trim() || 'Heart'
+      });
+      setSections(sections.map(s => s.id === updated.id ? updated : s));
       setEditingSection(null);
-      setSuccessMsg('Section updated successfully.');
-      setTimeout(() => setSuccessMsg(null), 3000);
+      toast.success('Section Updated', `"${updated.title}" saved and published.`);
     } catch (err: any) {
-      setError(err.message || 'Save failed.');
+      toast.error('Save Failed', err.message || 'Failed to update section.');
     } finally {
       setSaving(false);
     }
   };
 
   if (loading) {
-    return <LoadingState message="Loading Women's Corner sections..." />;
+    return <LoadingState message="Loading Women's Corner strategy pillars..." />;
+  }
+
+  if (error) {
+    return (
+      <ErrorState
+        title="Failed to Load Sections"
+        message={error}
+        onRetry={fetchSections}
+      />
+    );
   }
 
   return (
@@ -63,17 +83,10 @@ export const WomensCornerCMS: React.FC = () => {
             Women's Corner Sections Manager
           </h1>
           <p className="text-xs text-ink/65">
-            Manage the 4 foundational pillars: Issues, Opportunities, Resources, and Support.
+            Configure the 4 foundational welfare pillars: Issues, Opportunities, Resources, and Support.
           </p>
         </div>
       </div>
-
-      {successMsg && (
-        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-          <span>{successMsg}</span>
-        </div>
-      )}
 
       {editingSection ? (
         <form onSubmit={handleSave} className="campaign-card space-y-4">
@@ -84,7 +97,7 @@ export const WomensCornerCMS: React.FC = () => {
             <button
               type="button"
               onClick={() => setEditingSection(null)}
-              className="text-xs text-ink/60 font-semibold"
+              className="text-xs text-ink/60 font-semibold hover:text-ink transition-colors"
             >
               Cancel
             </button>
@@ -126,20 +139,26 @@ export const WomensCornerCMS: React.FC = () => {
             <button
               type="button"
               onClick={() => setEditingSection(null)}
-              className="px-4 py-2 text-xs text-ink/60"
+              disabled={saving}
+              className="px-4 py-2 text-xs text-ink/60 hover:text-ink transition-colors font-semibold"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="btn-gold text-xs font-bold py-2 px-6 gap-2"
+              className="btn-gold text-xs font-bold py-2 px-6 gap-2 flex items-center"
             >
               <Save className="w-3.5 h-3.5" />
               <span>{saving ? 'Saving...' : 'Save Section'}</span>
             </button>
           </div>
         </form>
+      ) : sections.length === 0 ? (
+        <EmptyState
+          title="No Sections Configured"
+          message="No Women's Corner sections found in the campaign database."
+        />
       ) : (
         <div className="space-y-4">
           {sections.map((sec) => (

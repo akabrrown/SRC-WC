@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, ClipboardList, Lightbulb, CheckCircle2, AlertCircle, Plus, Save, ExternalLink } from 'lucide-react';
+import { MessageSquare, Plus, Save, Trash2, Edit2, Search } from 'lucide-react';
 import { api } from '../../api/client.js';
 import { StudentVoiceSubmission, SurveyLink } from '../../types/index.js';
-import { LoadingState } from '../../components/StateView.js';
-
+import { LoadingState, ErrorState, EmptyState } from '../../components/StateView.js';
 import { useToast } from '../../context/ToastContext.js';
+import { ConfirmModal } from '../../components/ConfirmModal.js';
 
 export const StudentVoiceCMS: React.FC = () => {
   const toast = useToast();
@@ -12,15 +12,22 @@ export const StudentVoiceCMS: React.FC = () => {
   const [surveys, setSurveys] = useState<SurveyLink[]>([]);
   const [activeTab, setActiveTab] = useState<'inbox' | 'surveys'>('inbox');
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
   const [editingSurvey, setEditingSurvey] = useState<Partial<SurveyLink> | null>(null);
   const [savingSurvey, setSavingSurvey] = useState<boolean>(false);
+  const [deleteTargetSurvey, setDeleteTargetSurvey] = useState<SurveyLink | null>(null);
+  const [deletingSurvey, setDeletingSurvey] = useState<boolean>(false);
 
   useEffect(() => {
+    document.title = 'Student Voice & Surveys CMS | Campaign Staff Portal';
     fetchData();
   }, []);
 
   const fetchData = async () => {
     setLoading(true);
+    setError(null);
     try {
       const [subs, survs] = await Promise.all([
         api.getStudentVoiceSubmissions(),
@@ -28,8 +35,8 @@ export const StudentVoiceCMS: React.FC = () => {
       ]);
       setSubmissions(subs);
       setSurveys(survs);
-    } catch (err) {
-      console.error('Failed to load student voice data', err);
+    } catch (err: any) {
+      setError(err.message || 'Failed to load student voice data.');
     } finally {
       setLoading(false);
     }
@@ -47,7 +54,10 @@ export const StudentVoiceCMS: React.FC = () => {
 
   const handleSaveSurvey = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editingSurvey || !editingSurvey.form_name) return;
+    if (!editingSurvey || !editingSurvey.form_name?.trim() || !editingSurvey.url?.trim()) {
+      toast.error('Validation Error', 'Form name and Survey URL are required.');
+      return;
+    }
     setSavingSurvey(true);
     try {
       if (editingSurvey.id) {
@@ -67,12 +77,46 @@ export const StudentVoiceCMS: React.FC = () => {
     }
   };
 
+  const confirmDeleteSurvey = async () => {
+    if (!deleteTargetSurvey) return;
+    setDeletingSurvey(true);
+    try {
+      await api.deleteSurveyLink(deleteTargetSurvey.id);
+      setSurveys(surveys.filter(s => s.id !== deleteTargetSurvey.id));
+      toast.success('Survey Removed', `Survey "${deleteTargetSurvey.form_name}" deleted.`);
+      setDeleteTargetSurvey(null);
+    } catch (err: any) {
+      toast.error('Delete Failed', err.message || 'Failed to delete survey link.');
+    } finally {
+      setDeletingSurvey(false);
+    }
+  };
 
   if (loading) {
     return <LoadingState message="Loading student voice intelligence..." />;
   }
 
+  if (error) {
+    return (
+      <ErrorState
+        title="Failed to Load Student Voice Data"
+        message={error}
+        onRetry={fetchData}
+      />
+    );
+  }
+
   const unreadCount = submissions.filter(s => s.status === 'new').length;
+
+  const filteredSubmissions = submissions.filter((sub) => {
+    const matchesStatus = statusFilter === 'all' || sub.status === statusFilter;
+    const matchesSearch =
+      searchQuery.trim() === '' ||
+      (sub.name && sub.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (sub.programme && sub.programme.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      sub.message.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesStatus && matchesSearch;
+  });
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 pb-20">
@@ -113,20 +157,43 @@ export const StudentVoiceCMS: React.FC = () => {
 
       {activeTab === 'inbox' ? (
         <div className="campaign-card !p-0 overflow-hidden">
+          {/* Search & Filter Bar */}
+          <div className="p-4 border-b border-border bg-muted/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="relative w-full sm:w-72">
+              <Search className="w-4 h-4 absolute left-3 top-2.5 text-ink/40" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search concerns and suggestions..."
+                className="w-full pl-9 pr-3 py-1.5 rounded-lg border border-border text-xs focus:border-brand-gold bg-white"
+              />
+            </div>
 
-          <div className="p-4 border-b border-border bg-muted/20 flex items-center justify-between">
-            <span className="text-xs font-bold text-brand-navy">
-              All Submissions ({submissions.length})
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-ink/70">Status:</span>
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-border bg-white"
+              >
+                <option value="all">All Submissions ({submissions.length})</option>
+                <option value="new">New (Unread)</option>
+                <option value="read">Read</option>
+                <option value="responded">Addressed / Responded</option>
+                <option value="archived">Archived</option>
+              </select>
+            </div>
           </div>
 
           <div className="divide-y divide-border">
-            {submissions.length === 0 ? (
-              <div className="p-12 text-center text-ink/50 text-xs">
-                No student voice submissions received yet.
-              </div>
+            {filteredSubmissions.length === 0 ? (
+              <EmptyState
+                title="No Submissions Found"
+                message={searchQuery ? 'No student voice records match your search filter.' : 'No student voice submissions received yet.'}
+              />
             ) : (
-              submissions.map((sub) => (
+              filteredSubmissions.map((sub) => (
                 <div key={sub.id} className="p-5 hover:bg-muted/10 transition-colors space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
@@ -145,7 +212,7 @@ export const StudentVoiceCMS: React.FC = () => {
 
                     <div className="flex items-center gap-3">
                       <span className="text-[11px] text-ink/50">
-                        {new Date(sub.created_at).toLocaleDateString()}
+                        {new Date(sub.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                       </span>
                       <select
                         value={sub.status}
@@ -183,7 +250,7 @@ export const StudentVoiceCMS: React.FC = () => {
             </h2>
             <button
               onClick={() => setEditingSurvey({ form_name: '', platform: 'Google Forms', url: '', status: 'live' })}
-              className="btn-gold text-xs font-bold py-2 px-4 gap-1.5"
+              className="btn-gold text-xs font-bold py-2 px-4 gap-1.5 flex items-center shadow-sm"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Add Survey Link</span>
@@ -203,6 +270,7 @@ export const StudentVoiceCMS: React.FC = () => {
                     required
                     value={editingSurvey.form_name || ''}
                     onChange={(e) => setEditingSurvey({ ...editingSurvey, form_name: e.target.value })}
+                    placeholder="e.g. Female Student Needs Survey 2026"
                     className="w-full px-3 py-2 rounded border border-border text-xs focus:border-brand-gold bg-white"
                   />
                 </div>
@@ -242,7 +310,8 @@ export const StudentVoiceCMS: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setEditingSurvey(null)}
-                  className="px-3 py-1.5 text-xs text-ink/60"
+                  disabled={savingSurvey}
+                  className="px-3 py-1.5 text-xs text-ink/60 hover:text-ink font-semibold"
                 >
                   Cancel
                 </button>
@@ -251,51 +320,82 @@ export const StudentVoiceCMS: React.FC = () => {
                   disabled={savingSurvey}
                   className="btn-gold text-xs font-bold py-1.5 px-4"
                 >
-                  Save Survey
+                  {savingSurvey ? 'Saving...' : 'Save Survey'}
                 </button>
               </div>
             </form>
           )}
 
           <div className="campaign-card !p-0 overflow-hidden">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-muted/40 text-ink/60 uppercase text-[10px] font-bold border-b border-border">
-                <tr>
-                  <th className="py-3 px-4">Form Name</th>
-                  <th className="py-3 px-4">Platform</th>
-                  <th className="py-3 px-4">URL</th>
-                  <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {surveys.map((surv) => (
-                  <tr key={surv.id}>
-                    <td className="py-3 px-4 font-bold text-brand-navy">{surv.form_name}</td>
-                    <td className="py-3 px-4 text-ink/60">{surv.platform}</td>
-                    <td className="py-3 px-4 font-mono text-ink/70 truncate max-w-xs">{surv.url}</td>
-                    <td className="py-3 px-4">
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                        surv.status === 'live' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'
-                      }`}>
-                        {surv.status}
-                      </span>
-                    </td>
-                    <td className="py-3 px-4 text-right">
-                      <button
-                        onClick={() => setEditingSurvey(surv)}
-                        className="text-xs font-bold text-brand-navy hover:text-brand-gold"
-                      >
-                        Edit
-                      </button>
-                    </td>
+            {surveys.length === 0 ? (
+              <EmptyState
+                title="No Surveys Configured"
+                message="Add an external Google Form or survey link for student consultations."
+                actionText="Add Survey Link"
+                onAction={() => setEditingSurvey({ form_name: '', platform: 'Google Forms', url: '', status: 'live' })}
+              />
+            ) : (
+              <table className="w-full text-left text-xs">
+                <thead className="bg-muted/40 text-ink/60 uppercase text-[10px] font-bold border-b border-border">
+                  <tr>
+                    <th className="py-3 px-4">Form Name</th>
+                    <th className="py-3 px-4">Platform</th>
+                    <th className="py-3 px-4">URL</th>
+                    <th className="py-3 px-4">Status</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {surveys.map((surv) => (
+                    <tr key={surv.id}>
+                      <td className="py-3 px-4 font-bold text-brand-navy">{surv.form_name}</td>
+                      <td className="py-3 px-4 text-ink/60">{surv.platform}</td>
+                      <td className="py-3 px-4 font-mono text-ink/70 truncate max-w-xs">{surv.url}</td>
+                      <td className="py-3 px-4">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                          surv.status === 'live' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'
+                        }`}>
+                          {surv.status}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4 text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => setEditingSurvey(surv)}
+                            className="p-1 rounded hover:bg-muted text-brand-navy"
+                            title="Edit Survey"
+                          >
+                            <Edit2 className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => setDeleteTargetSurvey(surv)}
+                            className="p-1 rounded hover:bg-red-50 text-red-600"
+                            title="Delete Survey"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
       )}
+
+      {/* Delete Survey Confirmation Modal */}
+      <ConfirmModal
+        isOpen={!!deleteTargetSurvey}
+        title="Delete Survey Link"
+        message={`Are you sure you want to delete the survey link "${deleteTargetSurvey?.form_name}"?`}
+        confirmText="Delete Survey"
+        isDestructive={true}
+        isLoading={deletingSurvey}
+        onConfirm={confirmDeleteSurvey}
+        onCancel={() => setDeleteTargetSurvey(null)}
+      />
     </div>
   );
 };

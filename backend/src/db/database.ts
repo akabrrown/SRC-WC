@@ -207,6 +207,15 @@ class CampaignDatabase {
     this.persist();
     return newLink;
   }
+  public deleteSurveyLink(id: string): boolean {
+    const initial = this.state.surveyLinks.length;
+    this.state.surveyLinks = this.state.surveyLinks.filter(l => l.id !== id);
+    if (this.state.surveyLinks.length !== initial) {
+      this.persist();
+      return true;
+    }
+    return false;
+  }
 
   // Women's Corner Sections
   public getWomensCornerSections(onlyPublished = false): WomensCornerSection[] {
@@ -562,6 +571,18 @@ class CampaignDatabase {
     this.state.adminUsers[idx] = { ...this.state.adminUsers[idx], ...updates };
     this.persist();
     return this.state.adminUsers[idx];
+  }
+  public deleteAdminUser(id: string): boolean {
+    if (this.state.adminUsers.length <= 1) {
+      throw new Error('Cannot delete the only administrative user account.');
+    }
+    const initial = this.state.adminUsers.length;
+    this.state.adminUsers = this.state.adminUsers.filter(u => u.id !== id);
+    if (this.state.adminUsers.length !== initial) {
+      this.persist();
+      return true;
+    }
+    return false;
   }
 
   // Audit Logs (Append-Only)

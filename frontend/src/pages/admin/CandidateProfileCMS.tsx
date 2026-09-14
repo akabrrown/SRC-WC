@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { User, Save, CheckCircle2, AlertCircle, Sparkles, Image as ImageIcon, Tag } from 'lucide-react';
+import { User, Save } from 'lucide-react';
 import { api } from '../../api/client.js';
 import { CandidateProfile } from '../../types/index.js';
-import { LoadingState } from '../../components/StateView.js';
-
+import { LoadingState, ErrorState } from '../../components/StateView.js';
 import { useToast } from '../../context/ToastContext.js';
 
 export const CandidateProfileCMS: React.FC = () => {
   const toast = useToast();
   const [profile, setProfile] = useState<CandidateProfile | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState<boolean>(false);
 
   useEffect(() => {
+    document.title = 'Candidate Profile CMS | Campaign Staff Portal';
     fetchProfile();
   }, []);
 
   const fetchProfile = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await api.getCandidateProfile();
       setProfile(data);
     } catch (err: any) {
-      toast.error('Fetch Failed', err.message || 'Failed to load profile.');
+      setError(err.message || 'Failed to load candidate profile.');
     } finally {
       setLoading(false);
     }
@@ -31,29 +33,43 @@ export const CandidateProfileCMS: React.FC = () => {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!profile) return;
-    setSaving(true);
 
+    if (!profile.full_name?.trim() || !profile.display_name?.trim()) {
+      toast.error('Validation Error', 'Full Name and Display Name are required fields.');
+      return;
+    }
+
+    setSaving(true);
     try {
-      const updated = await api.updateCandidateProfile(profile);
+      const updated = await api.updateCandidateProfile({
+        ...profile,
+        full_name: profile.full_name.trim(),
+        display_name: profile.display_name.trim(),
+        slogan: profile.slogan?.trim(),
+        short_bio: profile.short_bio?.trim(),
+        programme: profile.programme?.trim(),
+        seo_description: profile.seo_description?.trim()
+      });
       setProfile(updated);
-      toast.success('Profile Saved', 'Candidate profile updated successfully.');
+      toast.success('Profile Saved', 'Candidate profile updated and published successfully.');
     } catch (err: any) {
-      toast.error('Save Failed', err.message || 'Save failed.');
+      toast.error('Save Failed', err.message || 'Failed to save candidate profile.');
     } finally {
       setSaving(false);
     }
   };
 
-
   if (loading) {
     return <LoadingState message="Loading candidate profile editor..." />;
   }
 
-  if (!profile) {
+  if (error || !profile) {
     return (
-      <div className="p-8 text-center">
-        <p className="text-sm text-red-600">Failed to load candidate profile.</p>
-      </div>
+      <ErrorState
+        title="Failed to Load Profile"
+        message={error || 'Candidate profile record could not be retrieved.'}
+        onRetry={fetchProfile}
+      />
     );
   }
 
@@ -73,13 +89,12 @@ export const CandidateProfileCMS: React.FC = () => {
             Candidate Profile Editor
           </h1>
           <p className="text-xs text-ink/65">
-            Manage official name, position, programme, campaign slogan, biography, and photography.
+            Manage official candidate name, position title, programme, campaign slogan, biography, and photos.
           </p>
         </div>
       </div>
 
       <form onSubmit={handleSave} className="space-y-8">
-
         {/* Section 1: Basic Info */}
         <div className="campaign-card">
           <div className="flex items-center justify-between border-b border-border pb-3 mb-5">
@@ -92,13 +107,14 @@ export const CandidateProfileCMS: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-bold text-ink">Full Official Name</label>
+                <label className="block text-xs font-bold text-ink">Full Official Name *</label>
                 {isFieldPlaceholder(profile.full_name) && (
-                  <span className="placeholder-badge text-[10px]">Awaiting Client Input</span>
+                  <span className="placeholder-badge text-[10px]">Awaiting Input</span>
                 )}
               </div>
               <input
                 type="text"
+                required
                 value={profile.full_name}
                 onChange={(e) => setProfile({ ...profile, full_name: e.target.value })}
                 className="w-full px-3.5 py-2.5 rounded-lg border border-border text-sm focus:border-brand-gold bg-white font-medium"
@@ -107,13 +123,14 @@ export const CandidateProfileCMS: React.FC = () => {
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-bold text-ink">Display Name (Short / Preferred)</label>
+                <label className="block text-xs font-bold text-ink">Display Name (Preferred) *</label>
                 {isFieldPlaceholder(profile.display_name) && (
-                  <span className="placeholder-badge text-[10px]">Awaiting Client Input</span>
+                  <span className="placeholder-badge text-[10px]">Awaiting Input</span>
                 )}
               </div>
               <input
                 type="text"
+                required
                 value={profile.display_name}
                 onChange={(e) => setProfile({ ...profile, display_name: e.target.value })}
                 className="w-full px-3.5 py-2.5 rounded-lg border border-border text-sm focus:border-brand-gold bg-white font-medium"
@@ -148,7 +165,7 @@ export const CandidateProfileCMS: React.FC = () => {
               <div className="flex items-center justify-between mb-1.5">
                 <label className="block text-xs font-bold text-ink">Academic Programme</label>
                 {isFieldPlaceholder(profile.programme) && (
-                  <span className="placeholder-badge text-[10px]">Awaiting Client Input</span>
+                  <span className="placeholder-badge text-[10px]">Awaiting Input</span>
                 )}
               </div>
               <input
@@ -184,7 +201,7 @@ export const CandidateProfileCMS: React.FC = () => {
             <h2 className="text-sm font-bold uppercase tracking-wider text-brand-navy">
               2. Slogan, Story & Photos
             </h2>
-            <span className="text-[11px] text-ink/50">Displayed in Meet Candidate & Home</span>
+            <span className="text-[11px] text-ink/50">Displayed on Meet Candidate & Home</span>
           </div>
 
           <div className="space-y-5">
@@ -192,14 +209,14 @@ export const CandidateProfileCMS: React.FC = () => {
               <div className="flex items-center justify-between mb-1.5">
                 <label className="block text-xs font-bold text-ink">Campaign Slogan (H1 Headline)</label>
                 {isFieldPlaceholder(profile.slogan) && (
-                  <span className="placeholder-badge text-[10px]">Awaiting Client Input</span>
+                  <span className="placeholder-badge text-[10px]">Awaiting Input</span>
                 )}
               </div>
               <input
                 type="text"
                 value={profile.slogan}
                 onChange={(e) => setProfile({ ...profile, slogan: e.target.value })}
-                placeholder="e.g. Empowering Every Woman, Elevating Every Voice"
+                placeholder="e.g. Dedicated Leadership, Proven Advocacy for Every Student"
                 className="w-full px-3.5 py-2.5 rounded-lg border border-border text-sm focus:border-brand-gold bg-white font-medium"
               />
             </div>
@@ -232,7 +249,7 @@ export const CandidateProfileCMS: React.FC = () => {
                   className="w-full px-3.5 py-2.5 rounded-lg border border-border text-sm focus:border-brand-gold bg-white font-mono text-xs"
                 />
                 <p className="text-[11px] text-ink/50 mt-1">
-                  Leave empty to render the silhouette placeholder.
+                  Leave empty to render the candidate silhouette placeholder.
                 </p>
               </div>
 
@@ -288,7 +305,7 @@ export const CandidateProfileCMS: React.FC = () => {
             <button
               type="submit"
               disabled={saving}
-              className="btn-gold text-xs font-bold py-2.5 px-6 gap-2"
+              className="btn-gold text-xs font-bold py-2.5 px-6 gap-2 flex items-center"
             >
               <Save className="w-3.5 h-3.5" />
               <span>{saving ? 'Saving...' : 'Save & Publish Profile'}</span>
